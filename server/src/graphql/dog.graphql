@@ -1,11 +1,13 @@
 type Dog {
+  _id: String!
   name: String!
   color: String
   age: Int
 }
 
 input CreateDogInput {
-  name: String!
+  _id: String
+  name: String
   color: String
   age: Int
 }
@@ -16,4 +18,6 @@ type Query {
 
 type Mutation {
   addDog(dog: CreateDogInput): Dog
+  deleteDog(dog: CreateDogInput): Boolean
+  updateDog(dog: CreateDogInput, udog: CreateDogInput): Boolean
 }

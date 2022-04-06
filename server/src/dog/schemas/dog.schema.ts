@@ -12,8 +12,17 @@ export const DogSchema = new mongoose.Schema({
 @ObjectType()
 export class Dog extends Document {
   @Field()
-  _id: string;
+  name: string;
 
+  @Field()
+  color: string;
+
+  @Field()
+  age: number;
+}
+
+@ObjectType()
+export class CreateDogInput {
   @Field()
   name: string;
 
