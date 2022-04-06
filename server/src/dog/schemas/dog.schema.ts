@@ -23,15 +23,3 @@ export class Dog extends Document {
   @Field()
   age: number;
 }
-
-@ObjectType()
-export class CreateDogInput {
-  @Field()
-  name: string;
-
-  @Field()
-  color: string;
-
-  @Field()
-  age: number;
-}

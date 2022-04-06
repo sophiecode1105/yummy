@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateDogInput, Dog } from './schemas/dog.schema';
+import { Dog } from './schemas/dog.schema';
 import { DogService } from './dog.service';
 
 @Resolver('Dog')
@@ -11,7 +11,7 @@ export class DogResolver {
     return await this.dogService.findAll();
   }
   @Mutation(() => Dog)
-  async addDog(@Args('dog') Dog: CreateDogInput) {
+  async addDog(@Args('dog') Dog: Dog) {
     return await this.dogService.addDog(Dog);
   }
 }

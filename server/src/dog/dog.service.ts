@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { CreateDogInput, Dog } from './schemas/dog.schema';
+import { Dog } from './schemas/dog.schema';
 
 @Injectable()
 export class DogService {
@@ -12,7 +12,7 @@ export class DogService {
   async findAll(): Promise<Dog[]> {
     return this.DogModel.find().exec();
   }
-  async addDog(Dog: CreateDogInput): Promise<Dog> {
+  async addDog(Dog: Dog): Promise<Dog> {
     return this.DogModel.create(Dog);
   }
 }
