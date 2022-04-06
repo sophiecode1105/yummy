@@ -4,6 +4,16 @@ type Dog {
   age: Int
 }
 
+input CreateDogInput {
+  name: String!
+  color: String
+  age: Int
+}
+
 type Query {
   getAllDog: [Dog]
+}
+
+type Mutation {
+  addDog(dog: CreateDogInput): Dog
 }
