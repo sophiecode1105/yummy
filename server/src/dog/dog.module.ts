@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DogController } from './dog.controller';
+import { DatabaseModule } from '../database.module';
+import { DogProviders } from './dog.providers';
+import { DogResolver } from './dog.resolver';
 import { DogService } from './dog.service';
-import { Dog, DogSchema } from './schemas/dog.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Dog.name, schema: DogSchema }])],
-  controllers: [DogController],
-  providers: [DogService],
+  imports: [DatabaseModule],
+  providers: [DogResolver, DogService, ...DogProviders],
 })
 export class DogModule {}

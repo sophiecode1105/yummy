@@ -1,18 +1,25 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Field, ObjectType } from '@nestjs/graphql';
+import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 
-export type DogDocument = Dog & Document;
+export const DogSchema = new mongoose.Schema({
+  _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
+  name: String,
+  number: String,
+  email: String,
+});
 
-@Schema()
-export class Dog {
-  @Prop()
+@ObjectType()
+export class Dog extends Document {
+  @Field()
+  _id: string;
+
+  @Field()
   name: string;
 
-  @Prop()
-  age: number;
-
-  @Prop()
+  @Field()
   color: string;
-}
 
-export const DogSchema = SchemaFactory.createForClass(Dog);
+  @Field()
+  age: number;
+}

@@ -1,0 +1,9 @@
+type Dog {
+  name: String!
+  color: String
+  age: Int
+}
+
+type Query {
+  getAllDog: [Dog]
+}
