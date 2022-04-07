@@ -7,6 +7,7 @@ export const DogSchema = new mongoose.Schema({
   name: String,
   color: String,
   age: Number,
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Owner' },
 });
 
 @ObjectType()
@@ -19,16 +20,7 @@ export class Dog extends Document {
 
   @Field()
   age: number;
-}
-
-@ObjectType()
-export class CreateDogInput {
-  @Field()
-  name: string;
 
   @Field()
-  color: string;
-
-  @Field()
-  age: number;
+  owner: object;
 }

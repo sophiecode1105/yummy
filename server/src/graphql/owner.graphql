@@ -4,6 +4,7 @@ type Owner {
   age: Int
   gender: String
   job: Boolean
+  dog: [String]
 }
 
 input CreateOwnerInput {
@@ -12,6 +13,7 @@ input CreateOwnerInput {
   age: Int
   gender: String
   job: Boolean
+  dog: [String]
 }
 
 type Query {
@@ -22,4 +24,5 @@ type Mutation {
   addOwner(Owner: CreateOwnerInput): Owner
   deleteOwner(Owner: CreateOwnerInput): Boolean
   updateOwner(Owner: CreateOwnerInput, uOwner: CreateOwnerInput): Boolean
+  haveDog(Dog: String, Owner: String): Boolean
 }

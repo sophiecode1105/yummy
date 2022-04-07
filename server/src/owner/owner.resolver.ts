@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Owner } from './schemas/owner.schema';
 import { OwnerService } from './owner.service';
+import { Dog } from 'src/dog/schemas/dog.schema';
 
 @Resolver()
 export class OwnerResolver {
@@ -27,5 +28,11 @@ export class OwnerResolver {
     @Args('uOwner') uOwner: Owner,
   ) {
     return this.OwnerService.updateOwner(Owner, uOwner);
+  }
+
+  @Mutation()
+  async haveDog(@Args('Dog') Dog: string, @Args('Owner') Owner: string) {
+    console.log('리절브');
+    return this.OwnerService.haveDog(Dog, Owner);
   }
 }

@@ -8,6 +8,7 @@ export const OwnerSchema = new mongoose.Schema({
   age: Number,
   gender: String,
   job: Boolean,
+  dog: Array,
 });
 
 @ObjectType()
@@ -23,19 +24,7 @@ export class Owner extends Document {
 
   @Field()
   job: boolean;
-}
-
-@ObjectType()
-export class CreateOwnerInput {
-  @Field()
-  name: string;
 
   @Field()
-  gender: string;
-
-  @Field()
-  age: number;
-
-  @Field()
-  job: boolean;
+  dog: [string];
 }

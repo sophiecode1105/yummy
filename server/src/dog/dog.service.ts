@@ -11,11 +11,13 @@ export class DogService {
 
   async findAll(): Promise<Dog[]> {
     console.log('겟올 서비스');
-    return this.DogModel.find().exec();
+    const ex = await this.DogModel.find().populate('owner').exec();
+    console.log(ex);
+    return ex;
   }
   async addDog(Dog: Dog): Promise<Dog> {
     console.log('애드 서비스');
-    const b = await this.DogModel.create(Dog);
+    const b = await (await this.DogModel.create(Dog)).populate('owner');
     console.log(b);
     return b;
   }
