@@ -1,7 +1,6 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { Owner } from './schemas/owner.schema';
-import { Dog } from 'src/dog/schemas/dog.schema';
 
 @Injectable()
 export class OwnerService {
@@ -13,7 +12,9 @@ export class OwnerService {
   async findAll(): Promise<Owner[]> {
     console.log('겟올 서비스');
 
-    return this.OwnerModel.find().exec();
+    const ex = await this.OwnerModel.find().populate('dog').exec();
+    console.log(ex);
+    return ex;
   }
   async addOwner(Owner: Owner): Promise<Owner> {
     console.log('애드 서비스');
@@ -32,6 +33,7 @@ export class OwnerService {
   }
   async haveDog(Dog: string, Onwer: string) {
     console.log('해브도그');
+    console.log('도그:', Dog);
     const owner = await this.OwnerModel.findOne({ name: Onwer });
     owner.dog.push(Dog);
     owner.save();

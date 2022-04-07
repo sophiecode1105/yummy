@@ -11,7 +11,7 @@ input CreateDogInput {
   name: String
   color: String
   age: Int
-  owner: String
+  owner: String!
 }
 
 type Query {

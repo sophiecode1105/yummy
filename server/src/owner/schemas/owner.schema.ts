@@ -8,7 +8,7 @@ export const OwnerSchema = new mongoose.Schema({
   age: Number,
   gender: String,
   job: Boolean,
-  dog: Array,
+  dog: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Dog' }],
 });
 
 @ObjectType()

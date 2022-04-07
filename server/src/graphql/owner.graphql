@@ -4,7 +4,7 @@ type Owner {
   age: Int
   gender: String
   job: Boolean
-  dog: [String]
+  dog: [Dog]
 }
 
 input CreateOwnerInput {
