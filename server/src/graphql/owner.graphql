@@ -9,7 +9,7 @@ type Owner {
 
 input CreateOwnerInput {
   _id: String
-  name: String!
+  name: String
   age: Int
   gender: String
   job: Boolean

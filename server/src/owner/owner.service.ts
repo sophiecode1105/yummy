@@ -1,12 +1,16 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { Owner } from './schemas/owner.schema';
+import { Dog } from 'src/dog/schemas/dog.schema';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @Inject('OWNER_MODEL')
     private OwnerModel: Model<Owner>,
+
+    @Inject('DOG_MODEL')
+    private DogModel: Model<Dog>,
   ) {}
 
   async findAll(): Promise<Owner[]> {
@@ -23,7 +27,12 @@ export class OwnerService {
     return b;
   }
   async deleteOwner(Owner: Owner) {
-    const a = await this.OwnerModel.deleteOne({ name: Owner.name });
+    const e = await this.OwnerModel.findOne({ Owner });
+
+    await this.DogModel.deleteMany({ owner: { _id: e._id } });
+
+    const a = await this.OwnerModel.deleteOne({ name: e.name });
+
     return a.deletedCount !== 0 ? true : false;
   }
   async updateOwner(Owner: Owner, uOwner: Owner) {
