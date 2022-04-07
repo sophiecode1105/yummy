@@ -1,0 +1,25 @@
+type Owner {
+  _id: String
+  name: String!
+  age: Int
+  gender: String
+  job: Boolean
+}
+
+input CreateOwnerInput {
+  _id: String
+  name: String!
+  age: Int
+  gender: String
+  job: Boolean
+}
+
+type Query {
+  getAllOwner: [Owner]
+}
+
+type Mutation {
+  addOwner(Owner: CreateOwnerInput): Owner
+  deleteOwner(Owner: CreateOwnerInput): Boolean
+  updateOwner(Owner: CreateOwnerInput, uOwner: CreateOwnerInput): Boolean
+}

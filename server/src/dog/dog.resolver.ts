@@ -23,8 +23,6 @@ export class DogResolver {
 
   @Mutation()
   async updateDog(@Args('dog') Dog: Dog, @Args('udog') uDog: Dog) {
-    console.log('반찬투정하지마');
-
     return this.dogService.updateDog(Dog, uDog);
   }
 }

@@ -4,6 +4,7 @@ import { DogModule } from './dog/dog.module';
 
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { OwnerModule } from './owner/owner.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       'mongodb+srv://bomba:1234@cluster0.c125d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     ),
     DogModule,
+    OwnerModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
