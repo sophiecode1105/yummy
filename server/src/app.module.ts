@@ -5,6 +5,7 @@ import { DogModule } from './dog/dog.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { OwnerModule } from './owner/owner.module';
+// import { UserModule } from './user/user.module';
 
 @Module({
   imports: [

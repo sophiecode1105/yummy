@@ -1,0 +1,34 @@
+type User {
+  _id: String
+  email: String
+  password: String
+  nickname: String
+  img: String
+  intro: String
+  myRecipes: [String]
+  likeMenu: [String]
+}
+
+input createUser {
+  _id: String
+  email: String
+  password: String
+  nickname: String
+  img: String
+  intro: String
+  myRecipes: [String]
+  likeMenu: [String]
+}
+
+type Query {
+  getAllUser: [User]
+  getUser: User
+}
+
+type Mutation {
+  emailCertify(email: String): Int
+  joinUser(info: User): User
+  updateUser(info: User): User
+  deleteUser(_id: String): Boolean
+  login(email: String, password: String): User
+}
