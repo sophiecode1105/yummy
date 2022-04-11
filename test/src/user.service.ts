@@ -13,6 +13,9 @@ export class UserService {
       where: userWhereUniqueInput,
     });
   }
+  async allUser(): Promise<User[]> {
+    return this.prisma.user.findMany({ include: { posts: true } });
+  }
 
   async users(params: {
     skip?: number;
@@ -22,6 +25,7 @@ export class UserService {
     orderBy?: Prisma.UserOrderByWithRelationInput;
   }): Promise<User[]> {
     const { skip, take, cursor, where, orderBy } = params;
+
     return this.prisma.user.findMany({
       skip,
       take,

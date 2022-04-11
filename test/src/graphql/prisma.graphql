@@ -29,18 +29,21 @@ input createPost {
 }
 
 type Query {
+  allUser: [User]
   getPostById(id: String): Post
-  # getPublishedPosts():Post
-  # getFilteredPosts(searchString: String):Post
+  getPublishedPosts: Post
+  getFilteredPosts(searchString: String): Post
 }
 
-# type Mutation {
-#     createDraft(postData: {
-#       title: String
-#       content: String
-#       authorEmail: String
-#     }):Post
-#     signupUser(userData: { name: String; email: String }):User
-#     publishPost( id: String):Post
-#     deletePost(id:String):Post
-#   }
+input postData {
+  title: String
+  content: String
+  authorEmail: String
+}
+
+type Mutation {
+  createDraft(postData: postData): Post
+  signupUser(userData: createUser): User
+  publishPost(id: String): Post
+  deletePost(id: String): Post
+}
