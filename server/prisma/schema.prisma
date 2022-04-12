@@ -10,9 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-
 model User {
   id Int @default(autoincrement()) @id
   email  String @unique
@@ -25,9 +22,23 @@ model User {
 
 model Recipe {
   id Int @default(autoincrement()) @id
-  
   title String
   user   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int 
-   
+  contents Content[]
+}
+
+model Content{
+   id Int @default(autoincrement()) @id
+   img String
+   explain String
+   recipe Recipe? @relation(fields: [recipeId],references: [id], onDelete: Cascade)
+   recipeId Int
+}
+
+
+model Metarial {
+  id Int @default(autoincrement()) @id
+  name String
+  img String
 }

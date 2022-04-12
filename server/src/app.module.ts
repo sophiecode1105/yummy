@@ -5,6 +5,8 @@ import { PrismaService } from './prisma.service';
 import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
+// import { MetarialResolver } from './metarial.resolver';
+import { ContentResolver } from './content.resolver';
 
 @Module({
   imports: [
@@ -24,6 +26,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
       },
     }),
   ],
-  providers: [PrismaService, UserResolver, RecipeResolver],
+  providers: [
+    PrismaService,
+    UserResolver,
+    RecipeResolver,
+    // MetarialResolver,
+    ContentResolver,
+  ],
 })
 export class AppModule {}
