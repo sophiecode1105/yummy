@@ -1,0 +1,23 @@
+type Recipe {
+  id: Int
+  title: String
+  userId: Int
+  user: User
+}
+input createRecipe {
+  title: String
+  userId: Int
+}
+
+type Query {
+  getAllRecipe: [Recipe]
+  # getUser: User
+}
+
+type Mutation {
+  # emailCertify(email: String): Int
+  createRecipe(info: createRecipe): Recipe
+  # updateUser(info: User): User
+  # deleteUser(_id: String): Boolean
+  # login(email: String, password: String): User
+}

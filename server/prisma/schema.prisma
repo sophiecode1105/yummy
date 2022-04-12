@@ -9,3 +9,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+
+
+model User {
+  id Int @default(autoincrement()) @id
+  email  String @unique
+  password String
+  nickname String
+  img  String?
+  intro String?
+  recipes Recipe[]
+}
+
+model Recipe {
+  id Int @default(autoincrement()) @id
+  
+  title String
+  user   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int 
+}

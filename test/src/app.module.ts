@@ -16,6 +16,6 @@ import { AppResolver } from './app.resolver';
     }),
   ],
 
-  providers: [PrismaService, UserService, PostService, AppResolver],
+  providers: [PrismaService, UserService, PostService],
 })
 export class AppModule {}

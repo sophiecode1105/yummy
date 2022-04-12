@@ -1,34 +1,39 @@
 type User {
-  _id: String
+  id: Int
   email: String
   password: String
   nickname: String
   img: String
   intro: String
-  myRecipes: [String]
-  likeMenu: [String]
+  recipes: [Recipe]
+}
+input createUser {
+  email: String
+  password: String
+  nickname: String
+  img: String
+  intro: String
 }
 
-input createUser {
-  _id: String
+input updateUser {
+  id: Int!
   email: String
   password: String
   nickname: String
   img: String
   intro: String
-  myRecipes: [String]
-  likeMenu: [String]
 }
 
 type Query {
   getAllUser: [User]
-  getUser: User
+  getUser(id: Int!): User
 }
 
 type Mutation {
-  emailCertify(email: String): Int
-  joinUser(info: User): User
-  updateUser(info: User): User
-  deleteUser(_id: String): Boolean
-  login(email: String, password: String): User
+  emailCertify(email: String!): Int
+  joinUser(info: createUser!): User
+  updateUser(info: updateUser!): User
+  deleteUser(id: Int!): Boolean
+
+  login(email: String!, password: String!): User
 }
