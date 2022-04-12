@@ -8,16 +8,18 @@ input createRecipe {
   title: String
   userId: Int
 }
+input updateRecipe {
+  id: Int
+  title: String
+}
 
 type Query {
   getAllRecipe: [Recipe]
-  # getUser: User
+  getRecipe: Recipe
 }
 
 type Mutation {
-  # emailCertify(email: String): Int
   createRecipe(info: createRecipe): Recipe
-  # updateUser(info: User): User
-  # deleteUser(_id: String): Boolean
-  # login(email: String, password: String): User
+  updateRecipe(info: updateRecipe): Recipe
+  deleteRecipe(id: Int): Boolean
 }
