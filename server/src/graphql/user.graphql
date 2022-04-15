@@ -8,9 +8,9 @@ type User {
   recipes: [Recipe]
 }
 input createUser {
-  email: String
-  password: String
-  nickname: String
+  email: String!
+  password: String!
+  nickname: String!
   img: String
   intro: String
 }

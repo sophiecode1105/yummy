@@ -11,19 +11,10 @@ input inputContent {
   recipeId: Int
 }
 
-input updateContent {
-  id: Int!
-  img: String
-  explain: String
-  recipeId: Int
-}
-
 type Query {
   getRecipeContent(recipeId: Int): [Content]
 }
-# type Mutation {
-
-# createContent(info: [inputContent]): [Content]
-#   updateContent(info: [updateContent]): [Content]
-#   deleteContent(id: Int): Boolean
-# }
+type Mutation {
+  createContent(info: [inputContent]): Int
+  updateContent(info: [inputContent]): Int
+}

@@ -14,4 +14,16 @@ export class ContentResolver {
       where: { recipeId },
     });
   }
+  @Mutation()
+  async createContent(@Args('info') info: Content[]): Promise<Number> {
+    const ex = await this.prisma.content.createMany({ data: info });
+    return ex.count;
+  }
+  @Mutation()
+  async updateContent(@Args('info') info: Content[]): Promise<Number> {
+    const { recipeId } = info[0];
+    await this.prisma.content.deleteMany({ where: { recipeId } });
+    const ex = await this.prisma.content.createMany({ data: info });
+    return ex.count;
+  }
 }

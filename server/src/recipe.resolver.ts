@@ -55,6 +55,7 @@ export class RecipeResolver {
   async deleteRecipe(@Args('id') id: number): Promise<Boolean> {
     try {
       await this.prisma.recipe.delete({ where: { id } });
+      await this.prisma.content.deleteMany({ where: { recipeId: id } });
       return true;
     } catch (err) {
       console.log(err);

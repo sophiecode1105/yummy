@@ -5,8 +5,8 @@ type Recipe {
   user: User
 }
 input createRecipe {
-  title: String
-  userId: Int
+  title: String!
+  userId: Int!
 }
 input updateRecipe {
   id: Int
