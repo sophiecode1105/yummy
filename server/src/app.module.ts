@@ -5,7 +5,7 @@ import { PrismaService } from './prisma.service';
 import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
-// import { MetarialResolver } from './metarial.resolver';
+import { MetarialResolver } from './metarial.resolver';
 import { ContentResolver } from './content.resolver';
 
 @Module({
@@ -30,7 +30,7 @@ import { ContentResolver } from './content.resolver';
     PrismaService,
     UserResolver,
     RecipeResolver,
-    // MetarialResolver,
+    MetarialResolver,
     ContentResolver,
   ],
 })
