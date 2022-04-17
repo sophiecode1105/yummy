@@ -26,14 +26,26 @@ export class RecipeResolver {
     });
   }
 
+  @Query()
+  async searchRecipe(
+    @Args('metarialName') metarialName: string,
+  ): Promise<Recipes> {
+    const ex = await this.prisma.recipes.findMany({
+      where: { metarials: { search: metarialName } },
+    });
+    console.log(ex);
+    return;
+  }
+
   @Mutation()
   async createRecipe(
-    @Args('info') info: { title: string; userId: number },
+    @Args('info') info: { title: string; userId: number; metarials: string },
   ): Promise<Recipes> {
-    const { title, userId } = info;
+    const { title, userId, metarials } = info;
     return this.prisma.recipes.create({
       data: {
         title,
+        metarials,
         user: {
           connect: { id: userId },
         },
