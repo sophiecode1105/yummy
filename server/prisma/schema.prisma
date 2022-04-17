@@ -36,6 +36,7 @@ model Recipes {
   userId Int 
   contents Contents[]
   likes Likes[]
+  uses Uses[]
 }
 
 model Contents{
@@ -51,5 +52,15 @@ model Metarials {
   id Int @default(autoincrement()) @id
   name String
   img String
+  uses Uses[]
 }
 
+
+
+model Uses {
+  id Int @default(autoincrement()) @id
+  recipe Recipes? @relation(fields: [recipeId],references: [id], onDelete: Cascade)
+  recipeId Int
+  metarial Metarials? @relation(fields: [metarialId],references: [id], onDelete: Cascade)
+  metarialId Int
+}

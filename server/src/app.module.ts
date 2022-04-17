@@ -8,6 +8,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MetarialResolver } from './metarial.resolver';
 import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
+import { UseResolver } from './use.resolver';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { LikeResolver } from './Like.resolver';
     MetarialResolver,
     ContentResolver,
     LikeResolver,
+    UseResolver,
   ],
 })
 export class AppModule {}
