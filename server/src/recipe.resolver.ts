@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Recipe } from '@prisma/client';
+import { Recipes } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -7,16 +7,21 @@ export class RecipeResolver {
   constructor(private prisma: PrismaService) {}
 
   @Query()
-  async getAllRecipe(): Promise<Recipe[]> {
-    return this.prisma.recipe.findMany({});
+  async getAllRecipe(): Promise<Recipes[]> {
+    return this.prisma.recipes.findMany({
+      include: {
+        likes: true,
+      },
+    });
   }
 
   @Query()
-  async getRecipe(@Args('id') id: number): Promise<Recipe> {
-    return this.prisma.recipe.findUnique({
+  async getRecipe(@Args('id') id: number): Promise<Recipes> {
+    return this.prisma.recipes.findUnique({
       where: { id },
       include: {
         user: true,
+        likes: true,
       },
     });
   }
@@ -24,9 +29,9 @@ export class RecipeResolver {
   @Mutation()
   async createRecipe(
     @Args('info') info: { title: string; userId: number },
-  ): Promise<Recipe> {
+  ): Promise<Recipes> {
     const { title, userId } = info;
-    return this.prisma.recipe.create({
+    return this.prisma.recipes.create({
       data: {
         title,
         user: {
@@ -42,10 +47,10 @@ export class RecipeResolver {
   @Mutation()
   async updateRecipe(
     @Args('info') info: { id: number; title: string },
-  ): Promise<Recipe> {
+  ): Promise<Recipes> {
     const { id, title } = info;
 
-    return this.prisma.recipe.update({
+    return this.prisma.recipes.update({
       where: { id },
       data: { title },
     });
@@ -54,8 +59,8 @@ export class RecipeResolver {
   @Mutation()
   async deleteRecipe(@Args('id') id: number): Promise<Boolean> {
     try {
-      await this.prisma.recipe.delete({ where: { id } });
-      await this.prisma.content.deleteMany({ where: { recipeId: id } });
+      await this.prisma.recipes.delete({ where: { id } });
+      await this.prisma.contents.deleteMany({ where: { recipeId: id } });
       return true;
     } catch (err) {
       console.log(err);

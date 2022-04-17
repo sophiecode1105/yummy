@@ -10,35 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id Int @default(autoincrement()) @id
   email  String @unique
   password String
   nickname String
   img  String?
   intro String?
-  recipes Recipe[]
+  recipes Recipes[]
+  likes Likes[]
 }
 
-model Recipe {
+model Likes{
+  id Int @default(autoincrement()) @id
+  user Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  recipe Recipes  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId Int
+}
+
+model Recipes {
   id Int @default(autoincrement()) @id
   title String
-  user   User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   Users?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int 
-  contents Content[]
+  contents Contents[]
+  likes Likes[]
 }
 
-model Content{
+model Contents{
    id Int @default(autoincrement()) @id
    img String
    explain String
-   recipe Recipe? @relation(fields: [recipeId],references: [id], onDelete: Cascade)
+   recipe Recipes? @relation(fields: [recipeId],references: [id], onDelete: Cascade)
    recipeId Int
 }
 
 
-model Metarial {
+model Metarials {
   id Int @default(autoincrement()) @id
   name String
   img String
 }
+

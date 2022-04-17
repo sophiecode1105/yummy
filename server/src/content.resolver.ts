@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Content } from '@prisma/client';
+import { Contents } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -9,21 +9,21 @@ export class ContentResolver {
   @Query()
   async getRecipeContent(
     @Args('recipeId') recipeId: number,
-  ): Promise<Content[]> {
-    return this.prisma.content.findMany({
+  ): Promise<Contents[]> {
+    return this.prisma.contents.findMany({
       where: { recipeId },
     });
   }
   @Mutation()
-  async createContent(@Args('info') info: Content[]): Promise<Number> {
-    const ex = await this.prisma.content.createMany({ data: info });
+  async createContent(@Args('info') info: Contents[]): Promise<Number> {
+    const ex = await this.prisma.contents.createMany({ data: info });
     return ex.count;
   }
   @Mutation()
-  async updateContent(@Args('info') info: Content[]): Promise<Number> {
+  async updateContent(@Args('info') info: Contents[]): Promise<Number> {
     const { recipeId } = info[0];
-    await this.prisma.content.deleteMany({ where: { recipeId } });
-    const ex = await this.prisma.content.createMany({ data: info });
+    await this.prisma.contents.deleteMany({ where: { recipeId } });
+    const ex = await this.prisma.contents.createMany({ data: info });
     return ex.count;
   }
 }

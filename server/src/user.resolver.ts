@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { User } from '@prisma/client';
+import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
 
@@ -12,27 +12,41 @@ export class UserResolver {
   ) {}
 
   @Query()
-  async getAllUser(): Promise<User[]> {
-    return this.prisma.user.findMany({ include: { recipes: true } });
+  async getAllUser(): Promise<Users[]> {
+    return this.prisma.users.findMany({
+      include: {
+        recipes: true,
+        likes: {
+          include: {
+            user: true,
+            recipe: true,
+          },
+        },
+      },
+    });
   }
 
   @Query()
-  async getUser(@Args('id') id: number): Promise<User> {
-    return this.prisma.user.findUnique({
+  async getUser(@Args('id') id: number): Promise<Users> {
+    console.log('why');
+    return this.prisma.users.findUnique({
       where: { id },
-      include: { recipes: true },
+      include: {
+        recipes: true,
+        likes: { include: { user: true, recipe: true } },
+      },
     });
   }
 
   @Mutation()
-  async joinUser(@Args('info') info: User): Promise<User> {
+  async joinUser(@Args('info') info: Users): Promise<Users> {
     info.password = await bcrypt.hash(info.password, 3);
-    return this.prisma.user.create({ data: info });
+    return this.prisma.users.create({ data: info });
   }
 
   @Mutation()
   async emailCertify(@Args('email') email: string): Promise<Number> {
-    const existUser = await this.prisma.user.findUnique({
+    const existUser = await this.prisma.users.findUnique({
       where: {
         email,
       },
@@ -67,14 +81,14 @@ export class UserResolver {
     }
   }
   @Mutation()
-  async updateUser(@Args('info') info: User): Promise<User> {
-    return this.prisma.user.update({ where: { id: info.id }, data: info });
+  async updateUser(@Args('info') info: Users): Promise<Users> {
+    return this.prisma.users.update({ where: { id: info.id }, data: info });
   }
 
   @Mutation()
   async deleteUser(@Args('id') id: number): Promise<Boolean> {
     try {
-      await this.prisma.user.delete({ where: { id } });
+      await this.prisma.users.delete({ where: { id } });
 
       return true;
     } catch (err) {
@@ -87,8 +101,8 @@ export class UserResolver {
   async login(
     @Args('email') email: string,
     @Args('password') password: string,
-  ): Promise<User> {
-    const findUser = await this.prisma.user.findUnique({ where: { email } });
+  ): Promise<Users> {
+    const findUser = await this.prisma.users.findUnique({ where: { email } });
     if (findUser) {
       const passCheck = await bcrypt.compare(password, findUser.password);
 

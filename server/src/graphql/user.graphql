@@ -6,7 +6,9 @@ type User {
   img: String
   intro: String
   recipes: [Recipe]
+  likes: [Like]
 }
+
 input createUser {
   email: String!
   password: String!

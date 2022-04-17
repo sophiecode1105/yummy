@@ -3,6 +3,7 @@ type Recipe {
   title: String
   userId: Int
   user: User
+  likes: [Like]
 }
 input createRecipe {
   title: String!
@@ -15,7 +16,7 @@ input updateRecipe {
 
 type Query {
   getAllRecipe: [Recipe]
-  getRecipe: Recipe
+  getRecipe(id: Int): Recipe
 }
 
 type Mutation {
