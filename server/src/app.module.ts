@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { PrismaService } from './prisma.service';
@@ -9,12 +9,15 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
 // import { UseResolver } from './use.resolver';
+import { graphqlUploadExpress } from 'graphql-upload';
+import { FileResolver } from '../uploads/img.resolver';
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
+      uploads: false,
     }),
     MailerModule.forRoot({
       transport: {
@@ -36,6 +39,11 @@ import { LikeResolver } from './Like.resolver';
     ContentResolver,
     LikeResolver,
     // UseResolver,
+    FileResolver,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(graphqlUploadExpress()).forRoutes('graphql');
+  }
+}
