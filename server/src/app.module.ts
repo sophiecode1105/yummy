@@ -1,22 +1,49 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DogModule } from './dog/dog.module';
-
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { OwnerModule } from './owner/owner.module';
+import { ApolloDriver } from '@nestjs/apollo';
+import { PrismaService } from './prisma.service';
+import { UserResolver } from './user.resolver';
+import { RecipeResolver } from './recipe.resolver';
+import { MailerModule } from '@nestjs-modules/mailer';
+// import { MetarialResolver } from './metarial.resolver';
+import { ContentResolver } from './content.resolver';
+import { LikeResolver } from './Like.resolver';
+// import { UseResolver } from './use.resolver';
+import { graphqlUploadExpress } from 'graphql-upload';
+import { FileResolver } from '../uploads/img.resolver';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://bomba:1234@cluster0.c125d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    ),
-    DogModule,
-    OwnerModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
+      uploads: false,
+    }),
+    MailerModule.forRoot({
+      transport: {
+        service: 'Naver',
+        host: 'smtp.naver.com',
+        port: 587,
+        auth: {
+          user: 'malove0330@naver.com', //gmail주소입력
+          pass: process.env.MAIL_PASSWORD, //gmail패스워드 입력
+        },
+      },
     }),
   ],
+  providers: [
+    PrismaService,
+    UserResolver,
+    RecipeResolver,
+    // MetarialResolver,
+    ContentResolver,
+    LikeResolver,
+    // UseResolver,
+    FileResolver,
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(graphqlUploadExpress()).forRoutes('graphql');
+  }
+}
