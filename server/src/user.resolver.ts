@@ -42,6 +42,7 @@ export class UserResolver {
 
   @Mutation()
   async joinUser(@Args('info') info: Users): Promise<Users> {
+    console.log(info);
     info.password = await bcrypt.hash(info.password, 3);
 
     return this.prisma.users.create({ data: info });
@@ -49,6 +50,7 @@ export class UserResolver {
 
   @Mutation()
   async emailCertify(@Args('email') email: string): Promise<Number> {
+    console.log(email);
     const existUser = await this.prisma.users.findUnique({
       where: {
         email,

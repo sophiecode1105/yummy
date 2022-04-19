@@ -1,11 +1,11 @@
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
-import { AWSS3Uploader } from './awsUploader';
+// import { AWSS3Uploader } from './awsUploader';
 
 @Resolver()
 export class FileResolver {
-  constructor(private awsUploader: AWSS3Uploader) {}
+  constructor() {}
 
   @Mutation()
   async uploadFile(
@@ -22,13 +22,11 @@ export class FileResolver {
     //   ContentType: mimetype,
     // });
 
-    return true;
-
-    // return new Promise(async (resolve, reject) =>
-    //   stream
-    //     .pipe(createWriteStream(`./uploads/${filename}`))
-    //     .on('finish', () => resolve(true))
-    //     .on('error', () => reject(false)),
-    // );
+    return new Promise(async (resolve, reject) =>
+      stream
+        .pipe(createWriteStream(`./uploads/${filename}`))
+        .on('finish', () => resolve(true))
+        .on('error', () => reject(false)),
+    );
   }
 }
