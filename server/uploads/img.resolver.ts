@@ -13,33 +13,11 @@ export class FileResolver {
     @Args('file', { type: () => GraphQLUpload })
     file: Promise<FileUpload>,
   ): Promise<Boolean> {
-    console.log('file');
-    console.log('env, ', process.env.MAIL_PASSWORD);
     console.log(file);
-
+    console.log('1');
+    console.log('2');
     const response = await handleFileUpload(file);
-    console.log(response);
+    console.log('5');
     return true;
-    // const { createReadStream, filename, encoding, mimetype } = file['file'];
-    // const stream = createReadStream();
-
-    // const result = await this.awsUploader.uploadToS3({
-    //   Key: 'fdjksfljs',
-    //   ContentEncoding: encoding,
-    //   Body: stream,
-    //   ContentType: mimetype,
-    // });
-
-    // await this.prisma.contents.update({
-    //   where: { id: 1 },
-    //   data: { img: path },
-    // });
-
-    // return new Promise(async (resolve, reject) =>
-    //   stream
-    //     .pipe(createWriteStream(`./uploads/${filename}`))
-    //     .on('finish', () => resolve(true))
-    //     .on('error', () => reject(false)),
-    // );
   }
 }
