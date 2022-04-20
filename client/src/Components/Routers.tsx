@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Join } from "../Pages/Join";
 import { Main } from "../Pages/Main";
 import { Mypage } from "../Pages/Mypage";
+import { Upload } from "../Pages/Upload";
 import { Header } from "./Header";
 
 export const Routers = () => {
@@ -13,6 +14,7 @@ export const Routers = () => {
         <Route path="/" element={<Main />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/upload" element={<Upload />} />
       </Routes>
     </BrowserRouter>
   );

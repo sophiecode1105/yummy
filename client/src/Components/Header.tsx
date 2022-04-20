@@ -24,6 +24,9 @@ export const Header = () => {
       <Div>
         <Link to="/join">회원가입</Link>
       </Div>
+      <Div>
+        <Link to="/upload">사진올리기</Link>
+      </Div>
     </Container>
   );
 };

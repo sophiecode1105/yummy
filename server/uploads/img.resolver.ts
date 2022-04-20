@@ -12,6 +12,8 @@ export class FileResolver {
     @Args('file', { type: () => GraphQLUpload })
     file: Promise<FileUpload>,
   ): Promise<Boolean> {
+    console.log('file');
+    console.log(file);
     const { createReadStream, filename, encoding, mimetype } = file['file'];
     const stream = createReadStream();
 
