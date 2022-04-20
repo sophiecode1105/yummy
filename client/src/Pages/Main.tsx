@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { gql, useQuery } from "@apollo/client";
 const Get_Recipes = gql`
   query {
-    getAllRecipe {
-      title
+    getRecipeContent(recipeId: 1) {
+      img
     }
   }
 `;
@@ -20,8 +20,8 @@ export const Main = () => {
       <Button>ddd</Button>
       {!data
         ? "로딩중"
-        : data.getAllRecipe.map((el: any, idx: any) => {
-            return <div key={idx}>{el.title}</div>;
+        : data.getRecipeContent.map((el: any, idx: any) => {
+            return <img src={el.img} key={idx} />;
           })}
     </div>
   );

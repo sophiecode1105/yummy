@@ -1,25 +1,53 @@
-// import AWS from 'aws-sdk';
+const AWS = require('aws-sdk');
+// store each image in it's own unique folder to avoid name duplicates
 
-// type S3UploadConfig = {
-//   accessKeyId: string;
-//   secretAccessKey: string;
-//   destinationBucketName: string;
-//   region?: string;
-// };
+// load config data from .env file
 
-// export class AWSS3Uploader {
-//   private s3: AWS.S3;
-//   public config: S3UploadConfig;
+require('dotenv').config();
+// update AWS config env data
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_ID,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_REGION,
+});
+const s3 = new AWS.S3({ region: process.env.AWS_REGION });
 
-//   constructor(config: S3UploadConfig) {
-//     AWS.config = new AWS.Config();
-//     AWS.config.update({
-//       accessKeyId: process.env.S3_ACCESS_KEY_ID,
-//       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-//       region: 'ap-northeast-2',
-//     });
+// my default params for s3 upload
+// I have a max upload size of 1 MB
+const s3DefaultParams = {
+  ACL: 'public-read',
+  Bucket: process.env.S3_BUCKET_NAME,
+  Conditions: [
+    ['content-length-range', 0, 1024000], // 1 Mb
+    { acl: 'public-read' },
+  ],
+};
 
-//     this.s3 = new AWS.S3();
-//     this.config = config;
-//   }
-// }
+// the actual upload happens here
+export const handleFileUpload = async (file) => {
+  const { createReadStream, filename } = await file['file'];
+
+  return new Promise((resolve, reject) => {
+    s3.upload(
+      {
+        ...s3DefaultParams,
+        Body: createReadStream(),
+        Key:
+          Math.floor(Math.random() * 1000).toString() +
+          Date.now() +
+          '.' +
+          filename.split('.').pop(),
+      },
+
+      (err, data) => {
+        if (err) {
+          console.log('error uploading...', err);
+          reject(err);
+        } else {
+          console.log('successfully uploaded file...', data);
+          resolve(data);
+        }
+      },
+    );
+  });
+};
