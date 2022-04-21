@@ -1,16 +1,22 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  UseGuards,
+} from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { PrismaService } from './prisma.service';
 import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
-// import { MetarialResolver } from './metarial.resolver';
+import { MetarialResolver } from './metarial.resolver';
 import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
 // import { UseResolver } from './use.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
+import { AuthGuard } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -35,7 +41,7 @@ import { FileResolver } from '../uploads/img.resolver';
     PrismaService,
     UserResolver,
     RecipeResolver,
-    // MetarialResolver,
+    MetarialResolver,
     ContentResolver,
     LikeResolver,
     // UseResolver,
@@ -43,6 +49,7 @@ import { FileResolver } from '../uploads/img.resolver';
   ],
 })
 export class AppModule implements NestModule {
+  @UseGuards(AuthGuard('local'))
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(graphqlUploadExpress()).forRoutes('graphql');
   }

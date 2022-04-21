@@ -1,18 +1,18 @@
 type Metarial {
   id: Int
-  name: String
-  img: String
+  name: String!
+  img: String!
 }
 
 input inputMetarial {
-  name: String
-  img: String
+  name: String!
+  img: String!
 }
 
 input updateMetarial {
   id: Int!
-  name: String
-  img: String
+  name: String!
+  img: String!
 }
 
 type Query {
@@ -20,6 +20,6 @@ type Query {
 }
 
 type Mutation {
-  createMetarial(info: inputMetarial): Metarial
-  updateMetarial(info: updateMetarial): Metarial
+  createMetarial(info: inputMetarial!): Metarial
+  updateMetarial(info: updateMetarial!): Metarial
 }

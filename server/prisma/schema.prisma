@@ -50,12 +50,11 @@ model Contents{
 }
 
 
-// model Metarials {
-//   id Int @default(autoincrement()) @id
-//   name String @unique
-//   img String
-//   uses Uses[]
-// }
+model Metarials {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  img String
+}
 
 
 // model Uses {
