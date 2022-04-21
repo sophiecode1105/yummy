@@ -1,22 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+import { signUp } from '../state/state';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  height: 500px;
-  max-width: 1400px;
   align-items: center;
-  margin: auto;
+  /* margin: auto; */
 `;
 const SigninContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
-  max-width: 1400px;
-  margin: 40px auto 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 5px;
@@ -40,6 +39,7 @@ const Text = styled.div`
 
 const ButtonWrap = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
 const AlertBox = styled.div`
@@ -47,12 +47,50 @@ const AlertBox = styled.div`
   justify-content: center;
 `;
 
+const Button = styled.button`
+  width: 200px;
+  height: 25px;
+  background-color: rgb(65, 78, 182);
+  color: #fff;
+  font-size: 15px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+`;
+
+const SocalLoginTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SocialButtonWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 5px;
+`;
+
+const SocialButton = styled.button`
+  height: 50px;
+  border-radius: 100%;
+`;
+
+const GoogleButton = styled(SocialButton)`
+  background-color: red;
+`;
+
+const KakaoButon = styled(SocialButton)`
+  background-color: rgb(243, 199, 71);
+`;
+
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
-  const [errorMessage, setErrorMessage] = useState("");
+
+  const signUpClick = useSetRecoilState(signUp);
+  const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -62,8 +100,8 @@ function Signin() {
   const handleLogin = async () => {
     const { email, password } = loginInfo;
 
-    if (Object.values(loginInfo).includes("")) {
-      setErrorMessage("모든 항목을 입력해 주세요.");
+    if (Object.values(loginInfo).includes('')) {
+      setErrorMessage('모든 항목을 입력해 주세요.');
       return;
     }
   };
@@ -80,28 +118,32 @@ function Signin() {
             </Title>
             <InputWrap>
               <Text>이메일</Text>
-              <input type="email" placeholder="이메일" onChange={handleInputValue("email")} />
+              <input type="email" placeholder="이메일" onChange={handleInputValue('email')} />
             </InputWrap>
             <InputWrap>
               <Text>비밀번호</Text>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                onChange={handleInputValue("password")}
-              />
+              <input type="password" placeholder="비밀번호" onChange={handleInputValue('password')} />
             </InputWrap>
 
-            <InputWrap className="underline" onClick={closeModal}>
-              <Link to="/signup">아직 아이디가 없으신가요?</Link>
-            </InputWrap>
+            <SocalLoginTitle>Social Login</SocalLoginTitle>
+
+            <SocialButtonWrap>
+              <KakaoButon>kakao</KakaoButon>
+              <GoogleButton>google</GoogleButton>
+            </SocialButtonWrap>
+
             <ButtonWrap>
-              <button
-                className="cursor-pointer px-3 py-2 text-sm text-blue-100 bg-sky-500 rounded hover:bg-sky-400"
+              <Button type="submit" onClick={handleLogin}>
+                Login
+              </Button>
+              <Button
                 type="submit"
-                onClick={handleLogin}
+                onClick={() => {
+                  signUpClick(true);
+                }}
               >
-                로그인
-              </button>
+                Sign Up!
+              </Button>
             </ButtonWrap>
             <AlertBox className="alert-box">{errorMessage}</AlertBox>
           </form>
