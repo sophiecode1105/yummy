@@ -1,8 +1,9 @@
-import React from "react";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
-import { modal } from "../state/state";
-import Signin from "./Signin";
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
+import { modal, signUp } from '../state/state';
+import Signin from './Signin';
+import Signup from './Signup';
 
 interface Modal {
   modals: boolean;
@@ -10,7 +11,7 @@ interface Modal {
 const ModalContiaer = styled.div<Modal>`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.modals ? "block" : "none")};
+  display: ${(props) => (props.modals ? 'block' : 'none')};
   /* border: 10px solid red; */
 `;
 
@@ -45,29 +46,31 @@ const CloseButton = styled.div`
   justify-content: flex-end;
   display: flex;
   width: 100%;
+
   cursor: pointer;
-  /* border: 1px solid red; */
   z-index: 9999;
 `;
 const Icon = styled.i`
-  margin: 10px;
   padding: 10px;
 `;
 
 const LoginModal = () => {
   const [modalValues, setModal] = useRecoilState(modal);
+  const [signUpState, setSignUpState] = useRecoilState(signUp);
+
   const test = () => {
     setModal(!modalValues);
+    setSignUpState(false);
   };
 
   return (
     <ModalContiaer modals={modalValues}>
       <ModalBackdrop>
         <ModalView>
-          <CloseButton onClick={test}>
-            <Icon className="fa-solid fa-xmark"></Icon>
+          <CloseButton>
+            <Icon onClick={test} className="fa-solid fa-xmark"></Icon>
           </CloseButton>
-          <Signin />
+          {signUpState ? <Signup /> : <Signin />}
         </ModalView>
       </ModalBackdrop>
     </ModalContiaer>
