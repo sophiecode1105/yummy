@@ -17,7 +17,6 @@ export const Routers = () => {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/mypage" element={<Mypage />} />
-
         <Route path="/upload" element={<Upload />} />
       </Routes>
     </BrowserRouter>
