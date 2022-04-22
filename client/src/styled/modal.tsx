@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SigninContainer = styled.div`
   display: flex;
@@ -79,6 +79,8 @@ export const InTitle = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 export const Title = styled.div`
@@ -170,11 +172,11 @@ type ErrorProps = {
 };
 
 export const Input = styled.input<ErrorProps>`
-  border: ${(props) => (props.error ? "2px solid red" : "1px solid rgba(0,0,0,0.2)")};
+  border: ${(props) => (props.error ? '2px solid red' : '1px solid rgba(0,0,0,0.2)')};
 `;
 
 export const WideInput = styled.input<ErrorProps>`
-  border: ${(props) => (props.error ? "2px solid red" : "1px solid rgba(0,0,0,0.2)")};
+  border: ${(props) => (props.error ? '2px solid red' : '1px solid rgba(0,0,0,0.2)')};
   width: 70%;
 `;
 
