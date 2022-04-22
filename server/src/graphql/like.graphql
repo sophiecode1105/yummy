@@ -11,5 +11,5 @@ type Query {
 }
 
 type Mutation {
-  Like(recipeId: Int, userId: Int): Like
+  Like(recipeId: Int!, userId: Int!): Like
 }

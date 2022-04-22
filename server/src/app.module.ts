@@ -5,12 +5,11 @@ import { PrismaService } from './prisma.service';
 import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
-// import { MetarialResolver } from './metarial.resolver';
 import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
-// import { UseResolver } from './use.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
+import { MetarialResolver } from './metarial.resolver';
 
 @Module({
   imports: [
@@ -35,7 +34,7 @@ import { FileResolver } from '../uploads/img.resolver';
     PrismaService,
     UserResolver,
     RecipeResolver,
-    // MetarialResolver,
+    MetarialResolver,
     ContentResolver,
     LikeResolver,
     // UseResolver,
