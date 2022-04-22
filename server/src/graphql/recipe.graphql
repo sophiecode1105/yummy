@@ -11,8 +11,9 @@ input createRecipe {
   userId: Int!
   metarials: String!
 }
+
 input updateRecipe {
-  id: Int
+  id: Int!
   title: String
   metarials: String
 }

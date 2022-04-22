@@ -3,8 +3,10 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
+
+import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
+import { handleFileUpload } from 'uploads/awsUploader';
 
 @Resolver()
 export class UserResolver {
@@ -42,8 +44,13 @@ export class UserResolver {
 
   @Mutation()
   async joinUser(@Args('info') info: Users): Promise<Users> {
-    console.log(info);
     info.password = await bcrypt.hash(info.password, 3);
+
+    if (info.img) {
+      const result = await handleFileUpload(info['img']);
+
+      info.img = result['Location'];
+    }
 
     return this.prisma.users.create({ data: info });
   }

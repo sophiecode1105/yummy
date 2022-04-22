@@ -10,13 +10,19 @@ import { PrismaService } from './prisma.service';
 import { UserResolver } from './user.resolver';
 import { RecipeResolver } from './recipe.resolver';
 import { MailerModule } from '@nestjs-modules/mailer';
+<<<<<<< HEAD
 import { MetarialResolver } from './metarial.resolver';
+=======
+>>>>>>> fb85ccd4adb74db1047fc36476203fdbef871ae4
 import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
-// import { UseResolver } from './use.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
+<<<<<<< HEAD
 import { AuthGuard } from '@nestjs/passport';
+=======
+import { MetarialResolver } from './metarial.resolver';
+>>>>>>> fb85ccd4adb74db1047fc36476203fdbef871ae4
 
 @Module({
   imports: [

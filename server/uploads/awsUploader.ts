@@ -5,6 +5,7 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_KEY,
   region: process.env.AWS_REGION,
 });
+
 const s3 = new AWS.S3({ region: process.env.AWS_REGION });
 
 const s3DefaultParams = {
@@ -19,23 +20,29 @@ const s3DefaultParams = {
 export const handleFileUpload = async (file) => {
   const { createReadStream, filename } = await file['file'];
 
-  return s3.upload(
-    {
-      ...s3DefaultParams,
-      Body: createReadStream(),
-      Key:
-        Math.floor(Math.random() * 1000).toString() +
-        Date.now() +
-        '.' +
-        filename.split('.').pop(),
-    },
+  return new Promise((resolve, reject) => {
+    s3.upload(
+      {
+        ...s3DefaultParams,
+        Body: createReadStream(),
+        Key:
+          Math.floor(Math.random() * 1000).toString() +
+          Date.now() +
+          '.' +
+          filename.split('.').pop(),
+      },
 
-    (err, data) => {
-      if (err) {
-        console.log('error uploading...', err);
-      } else {
-        console.log('successfully uploaded file...', data);
-      }
-    },
-  );
+      (err, data) => {
+        if (err) {
+          console.log('error uploading...', err);
+          reject(err);
+        } else {
+          console.log('successfully uploaded file...', data);
+          resolve(data);
+          console.log(resolve);
+          console.log('데이타 보냄');
+        }
+      },
+    );
+  });
 };
