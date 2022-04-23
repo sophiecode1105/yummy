@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 1400px;
@@ -14,9 +14,37 @@ export const MaterialListContainer = styled.div`
   grid-gap: 20px;
 `;
 
-export const Material = styled.div`
+export const Material = styled.img`
+  height: 100%;
   width: 100%;
-  background-color: powderblue;
+  background-blend-mode: darken;
+`;
+type materialImg = {
+  image: string;
+  state: boolean;
+};
+export const MaterialName = styled.div<materialImg>`
+  background-color: #0005;
+  background-image: ${(props) => `url(${props.image})`};
+  background-blend-mode: ${(props) => (props.state ? "darken" : "screen")};
+  background-size: 100% 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border-radius: 10px;
+
+  :hover {
+    background-blend-mode: screen;
+    font-weight: bolder;
+  }
+
+  :active {
+    background-blend-mode: screen;
+    font-weight: bolder;
+    color: black;
+  }
 `;
 
 export const ButtonWrap = styled(Link)`

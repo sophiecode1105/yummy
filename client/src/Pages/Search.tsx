@@ -1,16 +1,47 @@
-import { ButtonWrap, Container, Material, MaterialListContainer, RecipeButton } from '../styled/materialList';
+import {
+  ButtonWrap,
+  Container,
+  Material,
+  MaterialListContainer,
+  MaterialName,
+  RecipeButton,
+} from "../styled/materialList";
+
+import { gql, useQuery } from "@apollo/client";
+import { material } from "../state/typeDefs";
+
+const Get_Materials = gql`
+  query {
+    getAllMaterial {
+      id
+      name
+      img
+    }
+  }
+`;
 
 const Search = () => {
-  let arr = [];
-  for (let i = 0; i <= 50; i++) {
-    arr.push(`재료${i}`);
-  }
+  let { loading, data, error } = useQuery(Get_Materials);
 
   return (
     <Container>
       <MaterialListContainer>
-        {arr.map((el) => {
-          return <Material>{el}</Material>;
+        {data?.getAllMaterial.map((el: material) => {
+          let state = false;
+          console.log(state);
+          return (
+            <MaterialName
+              key={el.id}
+              image={el.img}
+              onClick={() => {
+                console.log("클릭");
+                state = !state;
+              }}
+              state={state}
+            >
+              {el.name}
+            </MaterialName>
+          );
         })}
       </MaterialListContainer>
       <ButtonWrap to="/recipelist">
