@@ -1,8 +1,8 @@
 type Content {
   id: Int
   img: String
-  explain: String
-  recipeId: Int
+  explain: String!
+  recipeId: Int!
 }
 
 input inputContent {

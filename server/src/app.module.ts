@@ -9,7 +9,7 @@ import { ContentResolver } from './content.resolver';
 import { LikeResolver } from './Like.resolver';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { FileResolver } from '../uploads/img.resolver';
-import { MetarialResolver } from './metarial.resolver';
+import { MaterialResolver } from './material.resolver';
 
 @Module({
   imports: [
@@ -34,7 +34,7 @@ import { MetarialResolver } from './metarial.resolver';
     PrismaService,
     UserResolver,
     RecipeResolver,
-    MetarialResolver,
+    MaterialResolver,
     ContentResolver,
     LikeResolver,
     // UseResolver,
