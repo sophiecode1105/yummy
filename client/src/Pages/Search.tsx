@@ -1,14 +1,10 @@
-import {
-  ButtonWrap,
-  Container,
-  Material,
-  MaterialListContainer,
-  MaterialName,
-  RecipeButton,
-} from "../styled/materialList";
+import { ButtonWrap, Container, MaterialListContainer, RecipeButton } from "../styled/materialList";
 
 import { gql, useQuery } from "@apollo/client";
 import { material } from "../state/typeDefs";
+import Material from "../Components/Material";
+import { materialList } from "../state/state";
+import { useSetRecoilState } from "recoil";
 
 const Get_Materials = gql`
   query {
@@ -22,30 +18,33 @@ const Get_Materials = gql`
 
 const Search = () => {
   let { loading, data, error } = useQuery(Get_Materials);
+  const setMaterialList = useSetRecoilState(materialList);
 
+  let list: string[] = [];
+
+  const listAdd = (materialName: string) => {
+    let index = list.indexOf(materialName);
+    if (index === -1) {
+      list.push(materialName);
+    } else {
+      list.splice(index, 1);
+    }
+  };
   return (
     <Container>
       <MaterialListContainer>
         {data?.getAllMaterial.map((el: material) => {
-          let state = false;
-          console.log(state);
-          return (
-            <MaterialName
-              key={el.id}
-              image={el.img}
-              onClick={() => {
-                console.log("클릭");
-                state = !state;
-              }}
-              state={state}
-            >
-              {el.name}
-            </MaterialName>
-          );
+          return <Material key={el.id} el={el} listAdd={listAdd} />;
         })}
       </MaterialListContainer>
       <ButtonWrap to="/recipelist">
-        <RecipeButton>Find Recipe</RecipeButton>
+        <RecipeButton
+          onClick={() => {
+            setMaterialList(list);
+          }}
+        >
+          Find Recipe
+        </RecipeButton>
       </ButtonWrap>
     </Container>
   );

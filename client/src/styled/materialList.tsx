@@ -19,6 +19,7 @@ export const Material = styled.img`
   width: 100%;
   background-blend-mode: darken;
 `;
+
 type materialImg = {
   image: string;
   state: boolean;
