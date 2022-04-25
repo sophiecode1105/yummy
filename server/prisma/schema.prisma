@@ -50,16 +50,9 @@ model Contents{
 }
 
 
-model Metarials {
+model Materials {
   id Int @default(autoincrement()) @id
-<<<<<<< HEAD
-  name String @unique
+  name String 
   img String
 }
-
-=======
-  name String
-  img String
-}
->>>>>>> fb85ccd4adb74db1047fc36476203fdbef871ae4
 
