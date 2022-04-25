@@ -3,16 +3,15 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
-
-import { GraphQLUpload, FileUpload } from 'graphql-upload';
-import { createWriteStream } from 'fs';
 import { handleFileUpload } from 'uploads/awsUploader';
+import { JwtService } from '@nestjs/jwt';
 
 @Resolver()
 export class UserResolver {
   constructor(
     private prisma: PrismaService,
     private mailerService: MailerService,
+    private readonly jwtService: JwtService,
   ) {}
 
   @Query()
@@ -113,13 +112,20 @@ export class UserResolver {
   async login(
     @Args('email') email: string,
     @Args('password') password: string,
-  ): Promise<Users> {
+  ): Promise<string> {
+    console.log('로그인 진입');
+    console.log(email, password);
     const findUser = await this.prisma.users.findUnique({ where: { email } });
+    console.log(findUser);
     if (findUser) {
       const passCheck = await bcrypt.compare(password, findUser.password);
 
       if (passCheck) {
-        return findUser;
+        const { id, email, nickName } = findUser;
+        console.log('토큰전');
+        const token = this.jwtService.sign({ id, email, nickName });
+        console.log(token);
+        return token;
       }
     }
   }

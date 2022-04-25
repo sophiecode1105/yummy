@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+import { useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { signUp } from "../state/state";
+import { modal, signUp } from "../state/state";
 import {
   AlertBox,
   Container,
@@ -16,28 +17,45 @@ import {
   InButton,
 } from "../styled/modal";
 
+const postLogin = gql`
+  mutation ($email: String!, $password: String!) {
+    login(email: $email, password: $password)
+  }
+`;
+
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
 
+  const [login, { data, loading, error }] = useMutation(postLogin);
+
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState("");
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
-
-  const login = (email: String, password: String) => {};
-
+  console.log(data, loading);
   const handleLogin = async () => {
     const { email, password } = loginInfo;
-
+    console.log(email, password);
     if (Object.values(loginInfo).includes("")) {
       setErrorMessage("모든 항목을 입력해 주세요.");
       return;
     }
+    login({
+      variables: {
+        email,
+        password,
+      },
+    });
+
+    // if (!data?.login) {
+    //   setModal(false);
+    // }
   };
+  const setModal = useSetRecoilState(modal);
 
   const closeModal = () => {};
 
@@ -55,11 +73,7 @@ function Signin() {
             </InInputWrap>
             <InInputWrap>
               <Text>비밀번호</Text>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                onChange={handleInputValue("password")}
-              />
+              <input type="password" placeholder="비밀번호" onChange={handleInputValue("password")} />
             </InInputWrap>
 
             <SocalLoginTitle>Social Login</SocalLoginTitle>

@@ -1,9 +1,9 @@
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-import { modal, signUp } from '../state/state';
-import Signin from './Signin';
-import Signup from './Signup';
+import React from "react";
+import { useRecoilState } from "recoil";
+import styled from "styled-components";
+import { modal, signUp } from "../state/state";
+import Signin from "./Signin";
+import Signup from "./Signup";
 
 interface Modal {
   modals: boolean;
@@ -11,14 +11,14 @@ interface Modal {
 const ModalContiaer = styled.div<Modal>`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.modals ? 'block' : 'none')};
+  display: ${(props) => (props.modals ? "block" : "none")};
   /* border: 10px solid red; */
 `;
 
 const ModalBackdrop = styled.div`
   position: fixed;
   display: flex;
-  z-index: 1;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   left: 0;
@@ -39,6 +39,7 @@ const ModalView = styled.div`
   background-color: white;
   border-radius: 10px;
   height: 432px;
+  z-index: 10;
 `;
 
 const CloseButton = styled.div`
