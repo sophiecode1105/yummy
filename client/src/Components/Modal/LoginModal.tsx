@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { modal, signUp } from '../state/state';
+import { modal, signUp } from '../../state/state';
 import Signin from './Signin';
 import Signup from './Signup';
 

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { signUp } from "../state/state";
+import React, { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { signUp } from '../../state/state';
 import {
   AlertBox,
   Container,
@@ -14,16 +14,17 @@ import {
   InInputWrap,
   ButtonWrap,
   InButton,
-} from "../styled/modal";
+  SignInInput,
+} from '../../styled/modal';
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const signUpClick = useSetRecoilState(signUp);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -33,8 +34,8 @@ function Signin() {
   const handleLogin = async () => {
     const { email, password } = loginInfo;
 
-    if (Object.values(loginInfo).includes("")) {
-      setErrorMessage("모든 항목을 입력해 주세요.");
+    if (Object.values(loginInfo).includes('')) {
+      setErrorMessage('모든 항목을 입력해 주세요.');
       return;
     }
   };
@@ -51,15 +52,11 @@ function Signin() {
             </InTitle>
             <InInputWrap>
               <Text>이메일</Text>
-              <input type="email" placeholder="이메일" onChange={handleInputValue("email")} />
+              <SignInInput type="email" placeholder="이메일" onChange={handleInputValue('email')} />
             </InInputWrap>
             <InInputWrap>
               <Text>비밀번호</Text>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                onChange={handleInputValue("password")}
-              />
+              <SignInInput type="password" placeholder="비밀번호" onChange={handleInputValue('password')} />
             </InInputWrap>
 
             <SocalLoginTitle>Social Login</SocalLoginTitle>
