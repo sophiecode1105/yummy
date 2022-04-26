@@ -4,6 +4,7 @@ export const Title = styled.h1`
   text-align: center;
   margin-top: 5px;
   font-size: 20px;
+  width: 18rem;
 `;
 
 export const TagsContainer = styled.div`
@@ -83,6 +84,17 @@ export const Container = styled.div`
 
 export const HatImg = styled.img`
   width: 8rem;
+`;
+
+export const KnifeImg = styled.img`
+  width: 3.5rem;
+  position: absolute;
+  top: 0;
+  right: 10%;
+`;
+
+export const TitleWrapper = styled.div`
+  position: relative;
 `;
 
 export const FoodsWrap = styled.div`

@@ -3,15 +3,15 @@ import { gql, useQuery } from '@apollo/client';
 
 const Get_FoodList = gql`
   query {
-    searchRecipe {
-      id
-      name
-      img
+    searchRecipe(metarialName: "양파&떡") {
+      title
     }
   }
 `;
 
 const Food = () => {
+  let { loading, data, error } = useQuery(Get_FoodList);
+
   return (
     <FoodsWrap>
       <FoodList>

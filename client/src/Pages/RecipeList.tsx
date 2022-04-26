@@ -1,14 +1,18 @@
 import { materialList } from '../state/state';
-import { Container, FoodImg, HatImg, Title } from '../styled/recipeList';
+import { Container, FoodImg, HatImg, Title, KnifeImg, TitleWrapper } from '../styled/recipeList';
 import Tag from '../Components/Recipe/Tag';
 import chefHat from '../assets/chefHat.png';
+import kitchenKinfe from '../assets/kitchenKnife.png';
 import Food from '../Components/Recipe/Food';
 
 const RecipeList = () => {
   return (
     <Container>
       <HatImg src={chefHat} />
-      <Title>내가 선택한 재료</Title>
+      <TitleWrapper>
+        <Title>내가 선택한 재료</Title>
+        <KnifeImg src={kitchenKinfe} />
+      </TitleWrapper>
       <Tag />
       <Food />
     </Container>

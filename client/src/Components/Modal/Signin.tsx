@@ -32,17 +32,20 @@ function Signin() {
   const setToken = useSetRecoilState(token);
 
   const setModal = useSetRecoilState(modal);
-  const [login, { data, loading, error }] = useMutation(postLogin);
 
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
+  const [login, { data, loading, error }] = useMutation(postLogin);
 
+  if (data?.login && loading !== true) {
+    setModal(false);
+    setToken(data.login);
+  }
   const handleLogin = async () => {
     const { email, password } = loginInfo;
-    console.log(email, password);
     if (Object.values(loginInfo).includes('')) {
       setErrorMessage('모든 항목을 입력해 주세요.');
       return;
@@ -53,12 +56,7 @@ function Signin() {
         password,
       },
     });
-
-    if (!data?.login) {
-      setModal(false);
-      setLoginInfo({ email: '', password: '' });
-      setToken(data.login);
-    }
+    setLoginInfo({ email: '', password: '' });
   };
 
   return (
