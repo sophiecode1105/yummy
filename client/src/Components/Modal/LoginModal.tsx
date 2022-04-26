@@ -18,7 +18,7 @@ const ModalContiaer = styled.div<Modal>`
 const ModalBackdrop = styled.div`
   position: fixed;
   display: flex;
-  z-index: 1;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   left: 0;
@@ -39,6 +39,7 @@ const ModalView = styled.div`
   background-color: white;
   border-radius: 10px;
   height: 432px;
+  z-index: 10;
 `;
 
 const CloseButton = styled.div`

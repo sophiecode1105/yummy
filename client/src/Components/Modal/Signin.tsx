@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { signUp } from '../../state/state';
+import { gql, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { modal, signUp, token } from '../../state/state';
 import {
   AlertBox,
   Container,
@@ -17,11 +18,21 @@ import {
   SignInInput,
 } from '../../styled/modal';
 
+const postLogin = gql`
+  mutation ($email: String!, $password: String!) {
+    login(email: $email, password: $password)
+  }
+`;
+
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
+  const setToken = useSetRecoilState(token);
+
+  const setModal = useSetRecoilState(modal);
+  const [login, { data, loading, error }] = useMutation(postLogin);
 
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,18 +40,26 @@ function Signin() {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
-  const login = (email: String, password: String) => {};
-
   const handleLogin = async () => {
     const { email, password } = loginInfo;
-
+    console.log(email, password);
     if (Object.values(loginInfo).includes('')) {
       setErrorMessage('모든 항목을 입력해 주세요.');
       return;
     }
-  };
+    login({
+      variables: {
+        email,
+        password,
+      },
+    });
 
-  const closeModal = () => {};
+    if (!data?.login) {
+      setModal(false);
+      setLoginInfo({ email: '', password: '' });
+      setToken(data.login);
+    }
+  };
 
   return (
     <>
@@ -52,11 +71,16 @@ function Signin() {
             </InTitle>
             <InInputWrap>
               <Text>이메일</Text>
-              <SignInInput type="email" placeholder="이메일" onChange={handleInputValue('email')} />
+              <input type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue('email')} />
             </InInputWrap>
             <InInputWrap>
               <Text>비밀번호</Text>
-              <SignInInput type="password" placeholder="비밀번호" onChange={handleInputValue('password')} />
+              <input
+                type="password"
+                placeholder="비밀번호"
+                value={loginInfo.password}
+                onChange={handleInputValue('password')}
+              />
             </InInputWrap>
 
             <SocalLoginTitle>Social Login</SocalLoginTitle>

@@ -233,7 +233,13 @@ const Signup = () => {
           </ImgLabel>
           <InputWrap>
             <Label htmlFor="소개">소개</Label>
-            <Input id="소개" type="text" />
+            <Input
+              id="소개"
+              type="text"
+              onChange={(e) => {
+                setIntro(e.target.value);
+              }}
+            />
           </InputWrap>
           <NextButton onClick={postJoin}>Next</NextButton>
         </>
