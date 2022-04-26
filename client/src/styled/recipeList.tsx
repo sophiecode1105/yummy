@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Title = styled.h1`
   text-align: center;
-  margin-top: 20px;
+  margin-top: 5px;
   font-size: 20px;
 `;
 
@@ -12,12 +12,15 @@ export const TagsContainer = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
+  width: 500px;
   padding: 0 8px;
   border: 1px solid rgb(214, 216, 218);
   border-radius: 6px;
   &:focus-within {
     border: 1px solid rgb(65, 78, 182);
+  }
+  @media (max-width: 768px) {
+    width: 360px;
   }
 `;
 
@@ -40,7 +43,7 @@ export const TagList = styled.li`
   list-style: none;
   border-radius: 6px;
   margin: 0 8px 8px 0;
-  background-color: rgb(65, 78, 182);
+  background-color: #ff6347;
 `;
 
 export const TagInput = styled.input`
@@ -63,7 +66,7 @@ export const Icon = styled.i`
   text-align: center;
   font-size: 14px;
   margin-left: 8px;
-  color: rgb(65, 78, 182);
+  color: #ff6347;
   border-radius: 50%;
   background: #fff;
   cursor: pointer;
@@ -72,23 +75,36 @@ export const Icon = styled.i`
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
-  border: 1px solid red;
   margin: 10px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-export const Recipe = styled.div`
+export const HatImg = styled.img`
+  width: 8rem;
+`;
+
+export const FoodsWrap = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  width: 600px;
+  width: 40%;
   background-color: rgba(0, 0, 0, 0.05);
 `;
 
-export const FoodImg = styled.img`
-  height: 300px;
-  width: 30%;
+export const FoodList = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `;
 
-export const FootImg = styled.img;
+export const FoodImg = styled.img`
+  height: 250px;
+  width: 40%;
+`;
+
+export const FoodDesc = styled.div`
+  width: 70%;
+`;

@@ -2,13 +2,13 @@ import { useCallback, useState } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import netlify from '../img/netlify-logo.png';
+import netlify from '../assets/netlify-logo.png';
 import { useSetRecoilState } from 'recoil';
 import { modal } from '../state/state';
 
 const Container = styled.div`
   display: flex;
-  background-color: #cae5f0;
+  background-color: #c3e7f5;
   height: 50px;
   justify-content: space-between;
   align-items: center;

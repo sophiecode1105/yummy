@@ -5,7 +5,7 @@ import { emailCertiNum, joinUserInfo } from '../../state/state';
 import { joinInfo } from '../../state/typeDefs';
 import { useState } from 'react';
 
-import netlify from '../../img/netlify-logo.png';
+import netlify from '../../assets/netlify-logo.png';
 import {
   Container,
   Errorbox,
