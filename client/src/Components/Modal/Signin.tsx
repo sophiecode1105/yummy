@@ -7,15 +7,13 @@ import {
   Container,
   GoogleButton,
   KakaoButon,
-  SigninContainer,
   SocalLoginTitle,
   SocialButtonWrap,
-  Text,
   InTitle,
-  InInputWrap,
   ButtonWrap,
   InButton,
   SignInInput,
+  SignInForm,
 } from '../../styled/modal';
 
 const postLogin = gql`
@@ -62,48 +60,37 @@ function Signin() {
   return (
     <>
       <Container>
-        <SigninContainer>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <InTitle>
-              <h1 className="text-grey-600 underline">Sign In</h1>
-            </InTitle>
-            <InInputWrap>
-              <Text>이메일</Text>
-              <input type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue('email')} />
-            </InInputWrap>
-            <InInputWrap>
-              <Text>비밀번호</Text>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                value={loginInfo.password}
-                onChange={handleInputValue('password')}
-              />
-            </InInputWrap>
-
-            <SocalLoginTitle>Social Login</SocalLoginTitle>
-
-            <SocialButtonWrap>
-              <KakaoButon>kakao</KakaoButon>
-              <GoogleButton>google</GoogleButton>
-            </SocialButtonWrap>
-
-            <ButtonWrap>
-              <InButton type="submit" onClick={handleLogin}>
-                Login
-              </InButton>
-              <InButton
-                type="submit"
-                onClick={() => {
-                  signUpClick(true);
-                }}
-              >
-                Sign Up!
-              </InButton>
-            </ButtonWrap>
-            <AlertBox className="alert-box">{errorMessage}</AlertBox>
-          </form>
-        </SigninContainer>
+        <SignInForm onSubmit={(e) => e.preventDefault()}>
+          <InTitle>
+            <h1>로그인</h1>
+          </InTitle>
+          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue('email')} />
+          <SignInInput
+            type="password"
+            placeholder="비밀번호"
+            value={loginInfo.password}
+            onChange={handleInputValue('password')}
+          />
+          <AlertBox className="alert-box">{errorMessage}</AlertBox>
+          <SocalLoginTitle>SOCIAL LOGIN</SocalLoginTitle>
+          <SocialButtonWrap>
+            <KakaoButon>kakao</KakaoButon>
+            <GoogleButton>google</GoogleButton>
+          </SocialButtonWrap>
+          <ButtonWrap>
+            <InButton type="submit" onClick={handleLogin}>
+              LOGIN
+            </InButton>
+            <InButton
+              type="submit"
+              onClick={() => {
+                signUpClick(true);
+              }}
+            >
+              SIGN UP
+            </InButton>
+          </ButtonWrap>
+        </SignInForm>
       </Container>
     </>
   );

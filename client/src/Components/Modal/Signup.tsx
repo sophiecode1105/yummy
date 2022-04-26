@@ -6,6 +6,7 @@ import { joinInfo } from '../../state/typeDefs';
 import { useState } from 'react';
 
 import netlify from '../../assets/netlify-logo.png';
+import welcome from '../../assets/welcome.png';
 import {
   Container,
   Errorbox,
@@ -17,10 +18,10 @@ import {
   SignupForm,
   Title,
   UserAvatar,
-  WideInput,
   ImgFile,
   UpText,
   ImgLabel,
+  WelcomeImg,
 } from '../../styled/modal';
 
 type FormData = {
@@ -131,82 +132,69 @@ const Signup = () => {
     <Container>
       {isFirst ? (
         <SignupForm onSubmit={handleSubmit(onSubmit)}>
-          <Title>Join US !</Title>
+          <WelcomeImg src={welcome} />
+          <Title>회원가입</Title>
           <InputWrap>
-            <Label htmlFor="이메일">이메일</Label>
             <Input
-              id="이메일"
               type="text"
-              error={errors.email?.message}
+              placeholder="이메일"
               {...register('email', {
                 required: '이메일을 입력해주세요',
                 pattern: myPattern,
               })}
             />
             <SendButton type="button" onClick={postCertify}>
-              send
+              SEND
             </SendButton>
           </InputWrap>
           <Errorbox>{errors.email?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="인증번호">인증번호</Label>
-            <WideInput
-              id="인증번호"
-              type="text"
-              error={errors.certifyNumber?.message}
-              {...register('certifyNumber', {
-                required: '인증번호를 입력해주세요',
-                validate: {
-                  matchPassword: (value: number) => {
-                    return certiNum === Number(value) || '인증번호가 일치하지 않습니다.';
-                  },
+          <Input
+            type="text"
+            placeholder="인증번호"
+            {...register('certifyNumber', {
+              required: '인증번호를 입력해주세요',
+              validate: {
+                matchPassword: (value: number) => {
+                  return certiNum === Number(value) || '인증번호가 일치하지 않습니다.';
                 },
-              })}
-            />
-          </InputWrap>
+              },
+            })}
+          />
           <Errorbox>{errors.certifyNumber?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="비밀번호">비밀번호</Label>
-            <WideInput
-              type="password"
-              error={errors.password?.message}
-              {...register('password', {
-                required: '비밀번호를 입력해주세요',
-                pattern: passwordPattern,
-              })}
-            />
-          </InputWrap>
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password', {
+              required: '비밀번호를 입력해주세요',
+              pattern: passwordPattern,
+            })}
+          />
           <Errorbox>{errors.password?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="비밀번호확인">비밀번호확인</Label>
-            <WideInput
-              id="비밀번호확인"
-              type="password"
-              error={errors.password2?.message}
-              {...register('password2', {
-                required: '비밀번호를 입력해주세요',
-                validate: {
-                  matchPassword: (value) => {
-                    const { password } = getValues();
-                    return password === value || '비밀번호가 일치하지 않습니다.';
-                  },
+          <Input
+            type="password"
+            placeholder="비밀번호확인"
+            {...register('password2', {
+              required: '비밀번호를 입력해주세요',
+              validate: {
+                matchPassword: (value) => {
+                  const { password } = getValues();
+                  return password === value || '비밀번호가 일치하지 않습니다.';
                 },
-              })}
-            />
-          </InputWrap>
+              },
+            })}
+          />
+
           <Errorbox>{errors.password2?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="닉네임">닉네임</Label>
-            <Input
-              id="닉네임"
-              error={errors.nickName?.message}
-              {...register('nickName', {
-                required: '닉네임을 입력해주세요',
-              })}
-            />
-          </InputWrap>
+          <Input
+            type="text"
+            placeholder="닉네임"
+            {...register('nickName', {
+              required: '닉네임을 입력해주세요',
+            })}
+          />
+
           <Errorbox>{errors.nickName?.message}</Errorbox>
-          <NextButton type="submit">Next</NextButton>
+          <NextButton type="submit">NEXT</NextButton>
         </SignupForm>
       ) : (
         <>

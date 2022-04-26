@@ -109,14 +109,34 @@ export const FoodsWrap = styled.div`
 export const FoodList = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 95%;
+  margin: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 1px 7px 0px rgba(0, 0, 0, 0.3);
 `;
 
 export const FoodImg = styled.img`
-  height: 250px;
+  height: 200px;
   width: 40%;
+  object-fit: cover;
+  margin: 2px;
 `;
 
-export const FoodDesc = styled.div`
-  width: 70%;
+export const Desc = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  border: 2px solid blue;
+`;
+
+export const FoodDesc = styled.div``;
+
+export const FoodName = styled.h1`
+  width: auto;
+  font-size: 25px;
+`;
+
+export const FoodMaterials = styled.div`
+  width: auto;
 `;

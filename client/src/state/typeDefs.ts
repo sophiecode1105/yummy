@@ -8,3 +8,7 @@ export type material = {
   name: string;
   img: string;
 };
+
+export interface Modal {
+  modals: boolean;
+}
