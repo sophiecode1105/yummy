@@ -11,7 +11,7 @@ const Get_Recipes = gql`
 
 const Button = styled.button``;
 
-export const Main = () => {
+const Main = () => {
   const { loading, data, error } = useQuery(Get_Recipes);
   console.log(loading, data);
   return (
@@ -21,3 +21,5 @@ export const Main = () => {
     </div>
   );
 };
+
+export default Main;

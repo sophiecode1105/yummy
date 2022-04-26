@@ -1,11 +1,12 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { handleFileUpload } from 'uploads/awsUploader';
 import { JwtService } from '@nestjs/jwt';
 
+process.env.ACCESS_SECRET;
 @Resolver()
 export class UserResolver {
   constructor(
@@ -30,10 +31,11 @@ export class UserResolver {
   }
 
   @Query()
-  async getUser(@Args('id') id: number): Promise<Users> {
-    console.log('why');
+  async getUser(@Context('token') token: string): Promise<Users> {
+    const userInfo = this.jwtService.verify(token);
+
     return this.prisma.users.findUnique({
-      where: { id },
+      where: { id: userInfo.id },
       include: {
         recipes: true,
         likes: { include: { user: true, recipe: true } },
@@ -56,7 +58,6 @@ export class UserResolver {
 
   @Mutation()
   async emailCertify(@Args('email') email: string): Promise<Number> {
-    console.log(email);
     const existUser = await this.prisma.users.findUnique({
       where: {
         email,

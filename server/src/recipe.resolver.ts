@@ -18,10 +18,8 @@ export class RecipeResolver {
   @Query()
   async getRecipe(
     @Args('id') id: number,
-    @Context('token') token: any,
+    @Context('token') token: string,
   ): Promise<Recipes> {
-    console.log('token');
-    console.log(token);
     return this.prisma.recipes.findUnique({
       where: { id },
       include: {
