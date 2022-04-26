@@ -30,7 +30,7 @@ input updateUser {
 
 type Query {
   getAllUser: [User]
-  getUser(id: Int!): User
+  getUser: User
 }
 
 type Mutation {
@@ -38,5 +38,5 @@ type Mutation {
   joinUser(info: createUser!): User
   updateUser(info: updateUser!): User
   deleteUser(id: Int!): Boolean
-  login(email: String!, password: String!): User
+  login(email: String!, password: String!): String
 }
