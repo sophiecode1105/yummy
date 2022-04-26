@@ -1,7 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
-import { useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { modal, signUp, token } from "../state/state";
+import { gql, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { modal, signUp, token } from '../../state/state';
 import {
   AlertBox,
   Container,
@@ -15,7 +15,8 @@ import {
   InInputWrap,
   ButtonWrap,
   InButton,
-} from "../styled/modal";
+  SignInInput,
+} from '../../styled/modal';
 
 const postLogin = gql`
   mutation ($email: String!, $password: String!) {
@@ -25,15 +26,15 @@ const postLogin = gql`
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const setToken = useSetRecoilState(token);
 
   const setModal = useSetRecoilState(modal);
 
   const signUpClick = useSetRecoilState(signUp);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -45,8 +46,8 @@ function Signin() {
   }
   const handleLogin = async () => {
     const { email, password } = loginInfo;
-    if (Object.values(loginInfo).includes("")) {
-      setErrorMessage("모든 항목을 입력해 주세요.");
+    if (Object.values(loginInfo).includes('')) {
+      setErrorMessage('모든 항목을 입력해 주세요.');
       return;
     }
     login({
@@ -55,7 +56,7 @@ function Signin() {
         password,
       },
     });
-    setLoginInfo({ email: "", password: "" });
+    setLoginInfo({ email: '', password: '' });
   };
 
   return (
@@ -68,12 +69,7 @@ function Signin() {
             </InTitle>
             <InInputWrap>
               <Text>이메일</Text>
-              <input
-                type="email"
-                placeholder="이메일"
-                value={loginInfo.email}
-                onChange={handleInputValue("email")}
-              />
+              <input type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue('email')} />
             </InInputWrap>
             <InInputWrap>
               <Text>비밀번호</Text>
@@ -81,7 +77,7 @@ function Signin() {
                 type="password"
                 placeholder="비밀번호"
                 value={loginInfo.password}
-                onChange={handleInputValue("password")}
+                onChange={handleInputValue('password')}
               />
             </InInputWrap>
 

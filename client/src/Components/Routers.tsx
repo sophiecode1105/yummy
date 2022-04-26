@@ -2,13 +2,12 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "../Css/Globalcss";
 import Detail from "../Pages/Detail";
-
 import Main from "../Pages/Main";
 import Mypage from "../Pages/Mypage";
 import RecipeList from "../Pages/RecipeList";
 import Search from "../Pages/Search";
 import Header from "./Header";
-import LoginModal from "./LoginModal";
+import LoginModal from "./Modal/LoginModal";
 
 export const Routers = () => {
   return (
