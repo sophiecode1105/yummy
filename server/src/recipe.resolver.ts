@@ -11,6 +11,7 @@ export class RecipeResolver {
     return this.prisma.recipes.findMany({
       include: {
         likes: true,
+        contents: true,
       },
     });
   }
@@ -25,16 +26,17 @@ export class RecipeResolver {
       include: {
         user: true,
         likes: true,
+        contents: true,
       },
     });
   }
 
   @Query()
   async searchRecipe(
-    @Args('metarialName') metarialName: string,
+    @Args('materialName') metarialName: string,
   ): Promise<Recipes> {
     const ex = await this.prisma.recipes.findMany({
-      where: { metarials: { search: metarialName } },
+      where: { materials: { search: metarialName } },
     });
     console.log(ex);
     return;
@@ -42,13 +44,13 @@ export class RecipeResolver {
 
   @Mutation()
   async createRecipe(
-    @Args('info') info: { title: string; userId: number; metarials: string },
+    @Args('info') info: { title: string; userId: number; materials: string },
   ): Promise<Recipes> {
-    const { title, userId, metarials } = info;
+    const { title, userId, materials } = info;
     return this.prisma.recipes.create({
       data: {
         title,
-        metarials,
+        materials,
         user: {
           connect: { id: userId },
         },
