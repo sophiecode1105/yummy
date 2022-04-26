@@ -24,6 +24,11 @@ import { JwtModule } from '@nestjs/jwt';
       typePaths: ['./**/*.graphql'],
       driver: ApolloDriver,
       uploads: false,
+      context: ({ req }) => {
+        const token = req.headers.authorization.split(' ')[1] || undefined;
+
+        return { token };
+      },
     }),
     MailerModule.forRoot({
       transport: {

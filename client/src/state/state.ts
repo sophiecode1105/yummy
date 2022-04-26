@@ -30,3 +30,9 @@ export const materialList = atom<string[]>({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const token = atom<string | undefined>({
+  key: "token",
+  default: undefined,
+  effects_UNSTABLE: [persistAtom],
+});

@@ -113,18 +113,16 @@ export class UserResolver {
     @Args('email') email: string,
     @Args('password') password: string,
   ): Promise<string> {
-    console.log('로그인 진입');
-    console.log(email, password);
     const findUser = await this.prisma.users.findUnique({ where: { email } });
-    console.log(findUser);
+
     if (findUser) {
       const passCheck = await bcrypt.compare(password, findUser.password);
 
       if (passCheck) {
         const { id, email, nickName } = findUser;
-        console.log('토큰전');
+
         const token = this.jwtService.sign({ id, email, nickName });
-        console.log(token);
+
         return token;
       }
     }
