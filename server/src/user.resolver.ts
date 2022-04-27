@@ -1,16 +1,18 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Users } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { createWriteStream } from 'fs';
+import { handleFileUpload } from 'uploads/awsUploader';
+import { JwtService } from '@nestjs/jwt';
 
+process.env.ACCESS_SECRET;
 @Resolver()
 export class UserResolver {
   constructor(
     private prisma: PrismaService,
     private mailerService: MailerService,
+    private readonly jwtService: JwtService,
   ) {}
 
   @Query()
@@ -29,10 +31,11 @@ export class UserResolver {
   }
 
   @Query()
-  async getUser(@Args('id') id: number): Promise<Users> {
-    console.log('why');
+  async getUser(@Context('token') token: string): Promise<Users> {
+    const userInfo = this.jwtService.verify(token);
+
     return this.prisma.users.findUnique({
-      where: { id },
+      where: { id: userInfo.id },
       include: {
         recipes: true,
         likes: { include: { user: true, recipe: true } },
@@ -43,6 +46,12 @@ export class UserResolver {
   @Mutation()
   async joinUser(@Args('info') info: Users): Promise<Users> {
     info.password = await bcrypt.hash(info.password, 3);
+
+    if (info.img) {
+      const result = await handleFileUpload(info['img']);
+
+      info.img = result['Location'];
+    }
 
     return this.prisma.users.create({ data: info });
   }
@@ -104,13 +113,18 @@ export class UserResolver {
   async login(
     @Args('email') email: string,
     @Args('password') password: string,
-  ): Promise<Users> {
+  ): Promise<string> {
     const findUser = await this.prisma.users.findUnique({ where: { email } });
+
     if (findUser) {
       const passCheck = await bcrypt.compare(password, findUser.password);
 
       if (passCheck) {
-        return findUser;
+        const { id, email, nickName } = findUser;
+
+        const token = this.jwtService.sign({ id, email, nickName });
+
+        return token;
       }
     }
   }
