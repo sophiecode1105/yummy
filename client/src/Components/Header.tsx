@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import netlify from '../assets/netlify-logo.png';
+import logo from '../assets/logo.png';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { modal, token } from '../state/state';
-import { Container, Div, Img, RightCon2 } from '../styled/header';
+import { Container, Div, FindRecipe, Img, RightCon2 } from '../styled/header';
 
 const Header = () => {
   const modals = useSetRecoilState(modal);
@@ -11,10 +11,11 @@ const Header = () => {
     <Container>
       <Link to="/">
         {' '}
-        <Img src={netlify} />
+        <Img src={logo} />
       </Link>
 
       <RightCon2>
+        <FindRecipe to="/search">레시피 찾기</FindRecipe>
         {tokens ? (
           <Link to="/mypage">
             <Div>마이 페이지</Div>

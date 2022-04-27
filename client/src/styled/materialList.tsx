@@ -12,6 +12,7 @@ export const MaterialListContainer = styled.div`
   width: 100%;
   display: grid;
   grid-gap: 20px;
+  padding: 10px;
 `;
 
 export const Material = styled.img`
@@ -49,6 +50,7 @@ export const MaterialName = styled.div<materialImg>`
 `;
 
 export const ButtonWrap = styled(Link)`
+  all: unset;
   display: flex;
   justify-content: center;
   margin: 20px;
@@ -60,7 +62,7 @@ export const RecipeButton = styled.div`
   align-items: center;
   width: 50%;
   height: 50px;
-  background-color: rgb(65, 78, 182);
+  background-color: rgb(132, 173, 51);
   color: #fff;
   font-size: 15px;
   border-radius: 5px;

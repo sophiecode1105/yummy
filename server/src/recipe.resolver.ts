@@ -34,12 +34,17 @@ export class RecipeResolver {
   @Query()
   async searchRecipe(
     @Args('materialName') metarialName: string,
-  ): Promise<Recipes> {
+  ): Promise<Recipes[]> {
     const ex = await this.prisma.recipes.findMany({
       where: { materials: { search: metarialName } },
+      include: {
+        contents: true,
+        user: true,
+        likes: true,
+      },
     });
     console.log(ex);
-    return;
+    return ex;
   }
 
   @Mutation()

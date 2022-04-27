@@ -20,7 +20,6 @@ export const ModalBackdrop = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  border: 10px solid black;
   /* backdrop-filter: blur(4px); */
 `;
 
@@ -145,7 +144,7 @@ export const AlertBox = styled.div`
 `;
 
 const btn = styled.button`
-  background-color: #ff6347;
+  background-color: rgb(132, 173, 51);
   color: #fff;
   font-size: 15px;
   border-radius: 5px;
@@ -182,7 +181,7 @@ export const SocialButton = styled.button`
 `;
 
 export const GoogleButton = styled(SocialButton)`
-  background-color: red;
+  background-color: #dd4b39;
 `;
 
 export const KakaoButon = styled(SocialButton)`
