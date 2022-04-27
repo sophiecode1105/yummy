@@ -5,9 +5,10 @@ type Content {
   recipeId: Int!
   recipe: Recipe
 }
+scalar Upload
 
 input inputContent {
-  img: String
+  img: Upload
   explain: String!
 }
 

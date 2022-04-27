@@ -8,3 +8,8 @@ export type material = {
   name: string;
   img: string;
 };
+
+export type content = {
+  img: File | string;
+  explain: string;
+};
