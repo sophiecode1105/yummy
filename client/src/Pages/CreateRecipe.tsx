@@ -15,6 +15,7 @@ const postRecipe = gql`
     }
   }
 `;
+
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);
   const recipeTitle = useRecoilValue(title);
@@ -26,10 +27,10 @@ const CreateRecipe = () => {
   const [recipe] = useMutation(postRecipe);
 
   const complete = async () => {
-    const { data = {} } = await recipe({
+    console.log(material.join(" & "));
+    const { data = { createRecipe: {} } } = await recipe({
       variables: {
-        title: recipeTitle,
-        material: material.join("&"),
+        info: { title: recipeTitle, materials: material.join(" & ") },
       },
     });
 

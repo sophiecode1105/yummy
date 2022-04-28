@@ -69,9 +69,11 @@ export class RecipeResolver {
     @Context('token') token: string,
   ): Promise<Recipes> {
     try {
+      // console.log('진입');
       const { title, materials } = info;
+      // console.log(token);
       const userInfo = this.jwtService.verify(token);
-
+      // console.log(userInfo);
       return this.prisma.recipes.create({
         data: {
           title,
