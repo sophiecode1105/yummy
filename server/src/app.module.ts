@@ -26,7 +26,7 @@ import { JwtModule } from '@nestjs/jwt';
       uploads: false,
       context: ({ req }) => {
         const token = req.headers.authorization.split(' ')[1] || undefined;
-
+        console.log(token);
         return { token };
       },
     }),

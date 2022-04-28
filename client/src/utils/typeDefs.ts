@@ -16,3 +16,11 @@ export type content = {
   img: File | string;
   explain: string;
 };
+
+export type FormData = {
+  email: string;
+  certifyNumber: number;
+  password: string;
+  password2: string;
+  nickName: string;
+};

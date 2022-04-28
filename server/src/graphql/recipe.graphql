@@ -9,7 +9,6 @@ type Recipe {
 }
 input createRecipe {
   title: String!
-  userId: Int!
   materials: String!
 }
 

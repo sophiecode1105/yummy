@@ -1,7 +1,7 @@
-import { gql, useMutation } from '@apollo/client';
-import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { modal, signUp, token } from '../../state/state';
+import { gql, useMutation } from "@apollo/client";
+import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { modal, signUp, token } from "../../state/state";
 import {
   AlertBox,
   Container,
@@ -14,7 +14,7 @@ import {
   InButton,
   SignInInput,
   SignInForm,
-} from '../../styled/modal';
+} from "../../styled/modal";
 
 const postLogin = gql`
   mutation ($email: String!, $password: String!) {
@@ -24,15 +24,15 @@ const postLogin = gql`
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const setToken = useSetRecoilState(token);
 
   const setModal = useSetRecoilState(modal);
 
   const signUpClick = useSetRecoilState(signUp);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
@@ -40,23 +40,24 @@ function Signin() {
 
   const handleLogin = async () => {
     const { email, password } = loginInfo;
-    if (Object.values(loginInfo).includes('')) {
-      setErrorMessage('모든 항목을 입력해 주세요.');
+    if (Object.values(loginInfo).includes("")) {
+      setErrorMessage("모든 항목을 입력해 주세요.");
       return;
     }
 
-    const { data = { login: '' } } = await postlogin({
+    const { data = { login: "" } } = await postlogin({
       variables: {
         email,
         password,
       },
     });
 
-    if (data.login !== '') {
+    if (data.login !== "") {
       setModal(false);
       setToken(data.login);
     }
-    setLoginInfo({ email: '', password: '' });
+    setLoginInfo({ email: "", password: "" });
+    window.location.reload();
   };
 
   return (
@@ -66,12 +67,12 @@ function Signin() {
           <InTitle>
             <h1>로그인</h1>
           </InTitle>
-          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue('email')} />
+          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue("email")} />
           <SignInInput
             type="password"
             placeholder="비밀번호"
             value={loginInfo.password}
-            onChange={handleInputValue('password')}
+            onChange={handleInputValue("password")}
           />
           <AlertBox className="alert-box">{errorMessage}</AlertBox>
           <SocalLoginTitle>SOCIAL LOGIN</SocalLoginTitle>

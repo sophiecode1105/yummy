@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { allMaterials, materialList } from '../../state/state';
 import {
   Icon,
@@ -41,7 +41,6 @@ const Tag = () => {
         (event.target as HTMLInputElement).value = '';
       } else {
         setTags([...tags, (event.target as HTMLInputElement).value]);
-        console.log('렌더링횟수');
         (event.target as HTMLInputElement).value = '';
         setSearchText('');
       }
@@ -76,7 +75,7 @@ const Tag = () => {
       <TagInput
         type="text"
         placeholder="재료를 입력해주세요"
-        onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => (event.key === 'Enter' ? addTags(event) : '')}
+        onKeyUp={(event: any) => (event.key === 'Enter' ? addTags(event) : '')}
         onChange={(e) => {
           setSearchText(e.target.value);
         }}
