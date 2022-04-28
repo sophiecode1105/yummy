@@ -9,6 +9,7 @@ export const Title = styled.h1`
 `;
 
 export const TagsContainer = styled.div`
+  position: relative;
   margin: 2rem auto;
   display: flex;
   align-items: flex-start;
@@ -16,11 +17,14 @@ export const TagsContainer = styled.div`
   min-height: 48px;
   width: 500px;
   padding: 0 8px;
-  /* border: 1px solid rgb(214, 216, 218); */
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(250, 242, 235);
   border-radius: 6px;
+
   &:focus-within {
-    border: 2px solid rgb(245, 132, 11);
+    border-bottom: none;
+    background-color: white;
+    border-radius: 6px 6px 0px 0px;
+    box-shadow: 0 2px 4px 4px rgb(0 0 0 / 5%);
   }
   @media (max-width: 768px) {
     width: 360px;
@@ -58,6 +62,12 @@ export const TagInput = styled.input`
   padding: 4px 0 0 0;
   :focus {
     outline: transparent;
+    &::placeholder {
+      color: grey;
+    }
+  }
+  &::placeholder {
+    color: #dac5b0;
   }
 `;
 
@@ -203,4 +213,34 @@ export const LikeWrap = styled.div`
 export const LikeCount = styled.div`
   font-size: 15px;
   margin-left: 10px;
+`;
+
+export const SearchResultWrap = styled.div`
+  position: absolute;
+  top: 49px;
+  right: -0px;
+  z-index: 20;
+  /* border: 1px solid red; */
+  background-color: white;
+  box-shadow: 0 2px 4px 4px rgb(0 0 0 / 5%);
+  width: 500px;
+  border-radius: 0px 0px 6px 6px;
+  @media (max-width: 768px) {
+    width: 360px;
+  }
+`;
+
+export const SearchResult = styled.div`
+  padding: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(250, 242, 235);
+  }
+  &:first-child {
+    margin-top: 15px;
+  }
+  &:last-child {
+    margin-bottom: 15px;
+  }
 `;

@@ -2,7 +2,7 @@ import { useForm, ValidationRule } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { emailCertiNum, joinUserInfo } from '../../state/state';
-import { joinInfo } from '../../state/typeDefs';
+import { FormData, joinInfo } from '../../utils/typeDefs';
 import { useState } from 'react';
 
 import netlify from '../../assets/netlify-logo.png';
@@ -23,14 +23,6 @@ import {
   ImgLabel,
   WelcomeImg,
 } from '../../styled/modal';
-
-type FormData = {
-  email: string;
-  certifyNumber: number;
-  password: string;
-  password2: string;
-  nickName: string;
-};
 
 const Certify = gql`
   mutation ($email: String!) {
