@@ -1,11 +1,12 @@
-import { useForm, ValidationRule } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { emailCertiNum, joinUserInfo } from "../../state/state";
-import { joinInfo } from "../../state/typeDefs";
-import { useState } from "react";
+import { useForm, ValidationRule } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { emailCertiNum, joinUserInfo } from '../../state/state';
+import { joinInfo } from '../../state/typeDefs';
+import { useState } from 'react';
 
-import netlify from "../../assets/netlify-logo.png";
+import netlify from '../../assets/netlify-logo.png';
+import welcome from '../../assets/welcome.png';
 import {
   Container,
   Errorbox,
@@ -17,11 +18,11 @@ import {
   SignupForm,
   Title,
   UserAvatar,
-  WideInput,
   ImgFile,
   UpText,
   ImgLabel,
-} from "../../styled/modal";
+  WelcomeImg,
+} from '../../styled/modal';
 
 type FormData = {
   email: string;
@@ -52,13 +53,13 @@ const Signup = () => {
   const [certiNum, setCertiNum] = useRecoilState(emailCertiNum);
   const [isFirst, setIsFirst] = useState(true);
   const [img, setImg] = useState<File | undefined>();
-  const [intro, setIntro] = useState("");
+  const [intro, setIntro] = useState('');
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ mode: "onChange" });
+  } = useForm<FormData>({ mode: 'onChange' });
 
   const [emailCer, { data, loading, error }] = useMutation(Certify);
 
@@ -78,7 +79,7 @@ const Signup = () => {
     const files = e.target.files;
     if (files && files.length === 1) {
       const file = files[0];
-      console.log("file", file);
+      console.log('file', file);
     }
   };
 
@@ -92,12 +93,12 @@ const Signup = () => {
 
   const myPattern: ValidationRule<RegExp> = {
     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-    message: "이메일 형식으로 입력해주세요",
+    message: '이메일 형식으로 입력해주세요',
   };
 
   const passwordPattern: ValidationRule<RegExp> = {
     value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-    message: "8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요",
+    message: '8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요',
   };
 
   const previewFile = (file: File) => {
@@ -130,82 +131,68 @@ const Signup = () => {
     <Container>
       {isFirst ? (
         <SignupForm onSubmit={handleSubmit(onSubmit)}>
-          <Title>Join US !</Title>
+          <WelcomeImg src={welcome} />
+          <Title>회원가입</Title>
           <InputWrap>
-            <Label htmlFor="이메일">이메일</Label>
             <Input
-              id="이메일"
               type="text"
-              error={errors.email?.message}
-              {...register("email", {
-                required: "이메일을 입력해주세요",
+              placeholder="이메일"
+              {...register('email', {
+                required: '이메일을 입력해주세요',
                 pattern: myPattern,
               })}
             />
             <SendButton type="button" onClick={postCertify}>
-              send
+              SEND
             </SendButton>
           </InputWrap>
           <Errorbox>{errors.email?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="인증번호">인증번호</Label>
-            <WideInput
-              id="인증번호"
-              type="text"
-              error={errors.certifyNumber?.message}
-              {...register("certifyNumber", {
-                required: "인증번호를 입력해주세요",
-                validate: {
-                  matchPassword: (value: number) => {
-                    return certiNum === Number(value) || "인증번호가 일치하지 않습니다.";
-                  },
+          <Input
+            type="text"
+            placeholder="인증번호"
+            {...register('certifyNumber', {
+              required: '인증번호를 입력해주세요',
+              validate: {
+                matchPassword: (value: number) => {
+                  return certiNum === Number(value) || '인증번호가 일치하지 않습니다.';
                 },
-              })}
-            />
-          </InputWrap>
+              },
+            })}
+          />
           <Errorbox>{errors.certifyNumber?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="비밀번호">비밀번호</Label>
-            <WideInput
-              type="password"
-              error={errors.password?.message}
-              {...register("password", {
-                required: "비밀번호를 입력해주세요",
-                pattern: passwordPattern,
-              })}
-            />
-          </InputWrap>
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password', {
+              required: '비밀번호를 입력해주세요',
+              pattern: passwordPattern,
+            })}
+          />
           <Errorbox>{errors.password?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="비밀번호확인">비밀번호확인</Label>
-            <WideInput
-              id="비밀번호확인"
-              type="password"
-              error={errors.password2?.message}
-              {...register("password2", {
-                required: "비밀번호를 입력해주세요",
-                validate: {
-                  matchPassword: (value) => {
-                    const { password } = getValues();
-                    return password === value || "비밀번호가 일치하지 않습니다.";
-                  },
+          <Input
+            type="password"
+            placeholder="비밀번호확인"
+            {...register('password2', {
+              required: '비밀번호를 입력해주세요',
+              validate: {
+                matchPassword: (value) => {
+                  const { password } = getValues();
+                  return password === value || '비밀번호가 일치하지 않습니다.';
                 },
-              })}
-            />
-          </InputWrap>
+              },
+            })}
+          />
+
           <Errorbox>{errors.password2?.message}</Errorbox>
-          <InputWrap>
-            <Label htmlFor="닉네임">닉네임</Label>
-            <Input
-              id="닉네임"
-              error={errors.nickName?.message}
-              {...register("nickName", {
-                required: "닉네임을 입력해주세요",
-              })}
-            />
-          </InputWrap>
+          <Input
+            type="text"
+            placeholder="닉네임"
+            {...register('nickName', {
+              required: '닉네임을 입력해주세요',
+            })}
+          />
           <Errorbox>{errors.nickName?.message}</Errorbox>
-          <NextButton type="submit">Next</NextButton>
+          <NextButton type="submit">NEXT</NextButton>
         </SignupForm>
       ) : (
         <>

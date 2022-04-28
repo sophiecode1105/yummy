@@ -21,16 +21,20 @@ const Tag = () => {
     }
   };
 
+  const removeTags = (indexToRemove: number) => {
+    setTags(tags.filter((tag) => indexToRemove !== tags.indexOf(tag)));
+  };
+
   return (
     <TagsContainer>
       <TagWrap>
-        {tags.map((tag, i) => {
+        {tags.map((tag, index: number) => {
           return (
-            <TagList key={i}>
+            <TagList key={index}>
               <TagTitle>
                 {tag}
                 <span>
-                  <Icon className="fas fa-times" />
+                  <Icon className="fas fa-times" onClick={() => removeTags(index)} />
                 </span>
               </TagTitle>
             </TagList>

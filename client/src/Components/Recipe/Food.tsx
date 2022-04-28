@@ -1,22 +1,45 @@
-import { FoodDesc, FoodImg, FoodList, FoodsWrap } from '../../styled/recipeList';
-import { gql, useQuery } from '@apollo/client';
+import {
+  Desc,
+  FoodDesc,
+  FoodImg,
+  FoodList,
+  FoodMaterials,
+  FoodName,
+  FoodsWrap,
+  LikeCount,
+  LikeWrap,
+  SubDesc,
+  UserAvatar,
+  UserDesc,
+  UserNickname,
+} from '../../styled/recipeList';
+import UndefinedImg from '../../assets/noImg.png';
+import { useState } from 'react';
 
-const Get_FoodList = gql`
-  query {
-    searchRecipe(metarialName: "양파&떡") {
-      title
-    }
-  }
-`;
-
-const Food = () => {
-  let { loading, data, error } = useQuery(Get_FoodList);
+const Food = ({ desc }: any) => {
+  let { id = 0, contents = [], likes = [], title = '', user = {}, materials = '' } = desc;
+  const [isHeartPressed, setIsHeartPressed] = useState(false);
 
   return (
     <FoodsWrap>
-      <FoodList>
-        <FoodImg src="http://m.nbfood.co.kr/web/product/big/202010/3b5284b67f40464d6d5166f1bf58c70e.jpg" />
-        <FoodDesc>어쩌구저쩌구</FoodDesc>
+      <FoodList to={String(id)}>
+        <FoodImg src={contents[0] ? contents[0]?.img : UndefinedImg} />
+        <Desc>
+          <FoodDesc>
+            <FoodName>{title}</FoodName>
+            <FoodMaterials>{materials}</FoodMaterials>
+          </FoodDesc>
+          <SubDesc>
+            <UserDesc>
+              <UserAvatar src={UndefinedImg} />
+              <UserNickname>{user.nickName}</UserNickname>
+            </UserDesc>
+            <LikeWrap>
+              {isHeartPressed ? <i className="fas fa-heart" /> : <i className="far fa-heart" />}
+              <LikeCount>100</LikeCount>
+            </LikeWrap>
+          </SubDesc>
+        </Desc>
       </FoodList>
     </FoodsWrap>
   );
