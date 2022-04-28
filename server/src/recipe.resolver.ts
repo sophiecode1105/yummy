@@ -1,10 +1,14 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
 import { Recipes } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
 export class RecipeResolver {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @Query()
   async getAllRecipe(): Promise<Recipes[]> {
@@ -61,16 +65,19 @@ export class RecipeResolver {
 
   @Mutation()
   async createRecipe(
-    @Args('info') info: { title: string; userId: number; materials: string },
+    @Args('info') info: { title: string; materials: string },
+    @Context('token') token: string,
   ): Promise<Recipes> {
     try {
-      const { title, userId, materials } = info;
+      const { title, materials } = info;
+      const userInfo = this.jwtService.verify(token);
+
       return this.prisma.recipes.create({
         data: {
           title,
           materials,
           user: {
-            connect: { id: userId },
+            connect: { id: userInfo.id },
           },
         },
         include: {
