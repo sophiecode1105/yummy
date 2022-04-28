@@ -6,6 +6,7 @@ import RecipeTitle from '../components/CreateRecipe/RecipeTitle';
 import { useRecoilValue } from 'recoil';
 import { materialList, title } from '../state/state';
 import Tag from '../components/Recipe/Tag';
+import Choice from '../components/CreateRecipe/Choice';
 
 const postRecipe = gql`
   mutation ($info: createRecipe!) {
@@ -13,6 +14,11 @@ const postRecipe = gql`
       id
       title
     }
+  }
+`;
+const postContents = gql`
+  mutation ($info: [inputContent]!, $recipeId: Int!) {
+    createContent(info: $info, recipeId: $recipeId)
   }
 `;
 
@@ -25,20 +31,29 @@ const CreateRecipe = () => {
   const [inputContents] = useState<content[]>([{ img: '', explain: '' }]);
 
   const [recipe] = useMutation(postRecipe);
+  const [content] = useMutation(postContents);
 
   const complete = async () => {
     console.log(material.join(' & '));
-    const { data = { createRecipe: {} } } = await recipe({
+    const { data: RecipeData = { createRecipe: {} } } = await recipe({
       variables: {
         info: { title: recipeTitle, materials: material.join(' & ') },
       },
     });
 
-    console.log(data);
+    console.log(RecipeData);
+    console.log(inputContents);
+    const { data: ContentsData = { createContent: {} } } = await content({
+      variables: {
+        info: inputContents,
+        recipeId: RecipeData.createRecipe.id,
+      },
+    });
+
+    console.log(ContentsData);
   };
 
   const add = () => {
-    console.log('DDD');
     prevImg.push('http://img.etoday.co.kr/pto_db/2020/11/20201124102548_1544383_710_340.jpg');
     inputContents.push({ img: '', explain: '' });
     setRender(render + 1);
@@ -47,7 +62,7 @@ const CreateRecipe = () => {
     <div>
       CreateRecipe
       <RecipeTitle />
-      <Tag />
+      <Choice />
       {prevImg.map((img: string, idx: number) => {
         return <Content key={idx} idx={idx} inputContents={inputContents} prevImg={prevImg} />;
       })}

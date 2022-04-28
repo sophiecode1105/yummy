@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Modal } from '../state/typeDefs';
+import { Modal } from '../utils/typeDefs';
 
 export const ModalContainer = styled.div<Modal>`
   width: 100%;
