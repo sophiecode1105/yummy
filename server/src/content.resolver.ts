@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Contents } from '@prisma/client';
+import { handleFileUpload } from 'uploads/awsUploader';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -22,12 +23,14 @@ export class ContentResolver {
   ): Promise<boolean> {
     try {
       for (let content of info) {
+        const response = await handleFileUpload(content.img);
+
         await this.prisma.contents.create({
           data: {
             recipe: {
               connect: { id: recipeId },
             },
-            img: content.img,
+            img: response['Location'],
             explain: content.explain,
           },
         });
