@@ -4,6 +4,7 @@ import { createUploadLink } from "apollo-upload-client";
 
 const getToken: any = localStorage.getItem("recoil-persist");
 let token = undefined;
+
 if (getToken) {
   const parseToken = JSON.parse(getToken);
   token = parseToken.token ? parseToken.token : undefined;

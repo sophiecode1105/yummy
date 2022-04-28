@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ export const RightCon2 = styled.div`
   font-weight: bold;
 `;
 
-export const FindRecipe = styled(Link)`
+export const LinkTag = styled(Link)`
   margin: 0px 10px;
   color: black;
   text-decoration: none;

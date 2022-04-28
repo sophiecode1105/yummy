@@ -2,7 +2,7 @@ import { useForm, ValidationRule } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { emailCertiNum, joinUserInfo } from '../../state/state';
-import { joinInfo } from '../../state/typeDefs';
+import { FormData, joinInfo } from '../../utils/typeDefs';
 import { useState } from 'react';
 
 import netlify from '../../assets/netlify-logo.png';
@@ -23,14 +23,6 @@ import {
   ImgLabel,
   WelcomeImg,
 } from '../../styled/modal';
-
-type FormData = {
-  email: string;
-  certifyNumber: number;
-  password: string;
-  password2: string;
-  nickName: string;
-};
 
 const Certify = gql`
   mutation ($email: String!) {
@@ -83,9 +75,6 @@ const Signup = () => {
     }
   };
 
-  console.log(data);
-
-  console.log(data2);
   if (!loading) {
     setCertiNum(data?.emailCertify);
   }
@@ -106,7 +95,9 @@ const Signup = () => {
 
   const previewFile = (file: File) => {
     const reader = new FileReader();
+
     reader.onload = () => {
+      console.log(String(reader.result));
       setAvatarImg(String(reader.result));
     };
     reader.readAsDataURL(file);
@@ -192,7 +183,6 @@ const Signup = () => {
               required: '닉네임을 입력해주세요',
             })}
           />
-
           <Errorbox>{errors.nickName?.message}</Errorbox>
           <NextButton type="submit">NEXT</NextButton>
         </SignupForm>

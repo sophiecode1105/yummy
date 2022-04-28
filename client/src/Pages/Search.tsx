@@ -1,11 +1,12 @@
 import { ButtonWrap, Container, MaterialListContainer, RecipeButton } from '../styled/materialList';
 
 import { gql, useQuery } from '@apollo/client';
-import { material } from '../state/typeDefs';
+
 import { allMaterials, materialList } from '../state/state';
 import { useSetRecoilState } from 'recoil';
-import Material from '../Components/Search/Material';
+import Material from '../components/Search/Material';
 import { useEffect } from 'react';
+import { material } from '../utils/typeDefs';
 
 const Get_Materials = gql`
   query {
