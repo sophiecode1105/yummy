@@ -15,30 +15,46 @@ const postRecipe = gql`
     }
   }
 `;
+const postContents = gql`
+  mutation ($info: [inputContent]!, $recipeId: Int!) {
+    createContent(info: $info, recipeId: $recipeId)
+  }
+`;
 
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);
   const recipeTitle = useRecoilValue(title);
   const material = useRecoilValue(materialList);
-  const [prevImg] = useState<string[]>(["http://img.etoday.co.kr/pto_db/2020/11/20201124102548_1544383_710_340.jpg"]);
+  const [prevImg] = useState<string[]>([
+    "http://img.etoday.co.kr/pto_db/2020/11/20201124102548_1544383_710_340.jpg",
+  ]);
 
   const [inputContents] = useState<content[]>([{ img: "", explain: "" }]);
 
   const [recipe] = useMutation(postRecipe);
+  const [content] = useMutation(postContents);
 
   const complete = async () => {
     console.log(material.join(" & "));
-    const { data = { createRecipe: {} } } = await recipe({
+    const { data: RecipeData = { createRecipe: {} } } = await recipe({
       variables: {
         info: { title: recipeTitle, materials: material.join(" & ") },
       },
     });
 
-    console.log(data);
+    console.log(RecipeData);
+    console.log(inputContents);
+    const { data: ContentsData = { createContent: {} } } = await content({
+      variables: {
+        info: inputContents,
+        recipeId: RecipeData.createRecipe.id,
+      },
+    });
+
+    console.log(ContentsData);
   };
 
   const add = () => {
-    console.log("DDD");
     prevImg.push("http://img.etoday.co.kr/pto_db/2020/11/20201124102548_1544383_710_340.jpg");
     inputContents.push({ img: "", explain: "" });
     setRender(render + 1);

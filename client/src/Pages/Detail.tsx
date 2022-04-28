@@ -26,14 +26,15 @@ const Detail = () => {
   } = useQuery(recipe, {
     variables: { id: Number(id) },
   });
+
   let { contents = [], materials = "", title = "", likes = [] } = data.getRecipe;
-  console.log(data);
+
   return (
     <div>
       {contents.map((el: { explain: string; img: string }, idx: number) => {
         return (
           <div key={idx}>
-            <img src={el.img} />
+            <img src={el.img} width="300px" />
             <div>{el.explain}</div>
           </div>
         );
