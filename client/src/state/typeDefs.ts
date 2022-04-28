@@ -12,3 +12,7 @@ export type material = {
 export interface Modal {
   modals: boolean;
 }
+export type content = {
+  img: File | string;
+  explain: string;
+};

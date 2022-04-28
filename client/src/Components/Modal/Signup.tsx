@@ -83,9 +83,6 @@ const Signup = () => {
     }
   };
 
-  console.log(data);
-
-  console.log(data2);
   if (!loading) {
     setCertiNum(data?.emailCertify);
   }
@@ -106,7 +103,9 @@ const Signup = () => {
 
   const previewFile = (file: File) => {
     const reader = new FileReader();
+
     reader.onload = () => {
+      console.log(String(reader.result));
       setAvatarImg(String(reader.result));
     };
     reader.readAsDataURL(file);
@@ -192,7 +191,6 @@ const Signup = () => {
               required: '닉네임을 입력해주세요',
             })}
           />
-
           <Errorbox>{errors.nickName?.message}</Errorbox>
           <NextButton type="submit">NEXT</NextButton>
         </SignupForm>

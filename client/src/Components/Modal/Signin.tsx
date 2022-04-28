@@ -36,24 +36,26 @@ function Signin() {
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
-  const [login, { data, loading, error }] = useMutation(postLogin);
+  let [postlogin] = useMutation(postLogin);
 
-  if (data?.login && loading !== true) {
-    setModal(false);
-    setToken(data.login);
-  }
   const handleLogin = async () => {
     const { email, password } = loginInfo;
     if (Object.values(loginInfo).includes('')) {
       setErrorMessage('모든 항목을 입력해 주세요.');
       return;
     }
-    login({
+
+    const { data = { login: '' } } = await postlogin({
       variables: {
         email,
         password,
       },
     });
+
+    if (data.login !== '') {
+      setModal(false);
+      setToken(data.login);
+    }
     setLoginInfo({ email: '', password: '' });
   };
 

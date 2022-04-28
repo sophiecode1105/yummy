@@ -8,12 +8,16 @@ export class RecipeResolver {
 
   @Query()
   async getAllRecipe(): Promise<Recipes[]> {
-    return this.prisma.recipes.findMany({
-      include: {
-        likes: true,
-        contents: true,
-      },
-    });
+    try {
+      return this.prisma.recipes.findMany({
+        include: {
+          likes: true,
+          contents: true,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Query()
@@ -21,61 +25,79 @@ export class RecipeResolver {
     @Args('id') id: number,
     @Context('token') token: string,
   ): Promise<Recipes> {
-    return this.prisma.recipes.findUnique({
-      where: { id },
-      include: {
-        user: true,
-        likes: true,
-        contents: true,
-      },
-    });
+    try {
+      return this.prisma.recipes.findUnique({
+        where: { id },
+        include: {
+          user: true,
+          likes: true,
+          contents: true,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Query()
   async searchRecipe(
     @Args('materialName') metarialName: string,
   ): Promise<Recipes[]> {
-    const ex = await this.prisma.recipes.findMany({
-      where: { materials: { search: metarialName } },
-      include: {
-        contents: true,
-        user: true,
-        likes: true,
-      },
-    });
-    console.log(ex);
-    return ex;
+    try {
+      const ex = await this.prisma.recipes.findMany({
+        where: { materials: { search: metarialName } },
+        include: {
+          user: true,
+          contents: true,
+          likes: true,
+        },
+      });
+
+      return ex;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Mutation()
   async createRecipe(
     @Args('info') info: { title: string; userId: number; materials: string },
   ): Promise<Recipes> {
-    const { title, userId, materials } = info;
-    return this.prisma.recipes.create({
-      data: {
-        title,
-        materials,
-        user: {
-          connect: { id: userId },
+    try {
+      const { title, userId, materials } = info;
+      return this.prisma.recipes.create({
+        data: {
+          title,
+          materials,
+          user: {
+            connect: { id: userId },
+          },
         },
-      },
-      include: {
-        user: true,
-      },
-    });
+        include: {
+          user: true,
+          contents: true,
+          likes: true,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Mutation()
   async updateRecipe(
     @Args('info') info: { id: number; title: string },
   ): Promise<Recipes> {
-    const { id, title } = info;
+    try {
+      const { id, title } = info;
 
-    return this.prisma.recipes.update({
-      where: { id },
-      data: { title },
-    });
+      return this.prisma.recipes.update({
+        where: { id },
+        data: { title },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Mutation()
