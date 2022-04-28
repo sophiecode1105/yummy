@@ -1,10 +1,36 @@
+import { useState, useEffect, useRef } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { allMaterials, materialList } from '../../state/state';
-import { Icon, TagInput, TagList, TagsContainer, TagTitle, TagWrap } from '../../styled/recipeList';
+import {
+  Icon,
+  SearchResult,
+  SearchResultWrap,
+  TagInput,
+  TagList,
+  TagsContainer,
+  TagTitle,
+  TagWrap,
+} from '../../styled/recipeList';
 
 const Tag = () => {
+  const insideRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useRecoilState<string[]>(materialList);
+  const [isfocused, setIsfocused] = useState<boolean>(false);
   const getAllMaterails = useRecoilValue(allMaterials);
+  const [searchText, setSearchText] = useState('');
+
+  const handleClickOutside = ({ target }: any) => {
+    if (isfocused && !insideRef?.current?.contains(target)) {
+      setIsfocused(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  });
 
   const addTags = (event: React.FormEvent<HTMLSelectElement>) => {
     if ((event.target as HTMLInputElement).value !== '') {
@@ -17,6 +43,7 @@ const Tag = () => {
         setTags([...tags, (event.target as HTMLInputElement).value]);
         console.log('렌더링횟수');
         (event.target as HTMLInputElement).value = '';
+        setSearchText('');
       }
     }
   };
@@ -26,7 +53,12 @@ const Tag = () => {
   };
 
   return (
-    <TagsContainer>
+    <TagsContainer
+      ref={insideRef}
+      onFocus={() => {
+        setIsfocused(!isfocused);
+      }}
+    >
       <TagWrap>
         {tags.map((tag, index: number) => {
           return (
@@ -43,9 +75,34 @@ const Tag = () => {
       </TagWrap>
       <TagInput
         type="text"
-        placeholder="재료추가"
+        placeholder="재료를 입력해주세요"
         onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => (event.key === 'Enter' ? addTags(event) : '')}
+        onChange={(e) => {
+          setSearchText(e.target.value);
+        }}
       />
+      {isfocused ? (
+        <SearchResultWrap>
+          {getAllMaterails.map((material, i) => {
+            if (material.startsWith(searchText))
+              return (
+                <SearchResult
+                  key={i}
+                  onClick={() => {
+                    if (!tags.includes(material)) {
+                      setTags([...tags, material]);
+                      setIsfocused(false);
+                    } else {
+                      alert('이미포함했심');
+                    }
+                  }}
+                >
+                  {material}
+                </SearchResult>
+              );
+          })}
+        </SearchResultWrap>
+      ) : null}
     </TagsContainer>
   );
 };
