@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { content } from '../../utils/typeDefs';
-import { Container } from '../../styled/contents';
+import { Container } from '../../styled/create';
 import { ImgFile, ImgLabel, UpText, UserAvatar } from '../../styled/modal';
 
 const Content = ({ idx, inputContents, prevImg }: { idx: number; inputContents: content[]; prevImg: string[] }) => {
