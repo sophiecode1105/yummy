@@ -17,6 +17,10 @@ export type content = {
   explain: string;
 };
 
+export type clickedProps = {
+  clicked: boolean;
+};
+
 export type FormData = {
   email: string;
   certifyNumber: number;
