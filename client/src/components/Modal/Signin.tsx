@@ -67,7 +67,12 @@ function Signin() {
           <InTitle>
             <h1>로그인</h1>
           </InTitle>
-          <SignInInput type="email" placeholder="이메일" value={loginInfo.email} onChange={handleInputValue("email")} />
+          <SignInInput
+            type="email"
+            placeholder="이메일"
+            value={loginInfo.email}
+            onChange={handleInputValue("email")}
+          />
           <SignInInput
             type="password"
             placeholder="비밀번호"

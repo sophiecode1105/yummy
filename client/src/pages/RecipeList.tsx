@@ -8,7 +8,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useRecoilValue } from "recoil";
 
 const Get_FoodList = gql`
-  query ($materialName: String!) {
+  query ($materialName: [String]!) {
     searchRecipe(materialName: $materialName) {
       id
       title
@@ -29,12 +29,13 @@ const Get_FoodList = gql`
 
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
-  console.log(searchMaterails.join("&"));
+  console.log("searchMaterails");
+  console.log(searchMaterails);
   let {
     loading,
     data = { searchRecipe: [] }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
     error,
-  } = useQuery(Get_FoodList, { variables: { materialName: searchMaterails.join("&") } });
+  } = useQuery(Get_FoodList, { variables: { materialName: searchMaterails } });
 
   console.log("data", data);
 

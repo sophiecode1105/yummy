@@ -1,8 +1,8 @@
-import { useRecoilValue } from 'recoil';
-import { allMaterials } from '../../state/state';
-import styled from 'styled-components';
-import { useState } from 'react';
-import { ChoiceContainer, List, ListWrap, SelectContent } from '../../styled/create';
+import { useRecoilValue } from "recoil";
+import { allMaterials } from "../../state/state";
+import styled from "styled-components";
+import { useState } from "react";
+import { ChoiceContainer, List, ListWrap, SelectContent } from "../../styled/create";
 
 const Choice = () => {
   const [materials, setMaterials] = useState<string[]>([]);

@@ -47,6 +47,8 @@ export class RecipeResolver {
   async searchRecipe(
     @Args('materialName') materialName: string[],
   ): Promise<Recipes[]> {
+    console.log('materialName');
+    console.log(materialName);
     try {
       let ex = await this.prisma.recipes.findMany({
         where: { materials: { contains: materialName[0] } },

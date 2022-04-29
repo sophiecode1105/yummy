@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { Modal } from '../utils/typeDefs';
+import styled from "styled-components";
+import { Modal } from "../utils/typeDefs";
 
 export const ModalContainer = styled.div<Modal>`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.modals ? 'block' : 'none')};
+  display: ${(props) => (props.modals ? "block" : "none")};
   /* border: 10px solid red; */
 `;
 

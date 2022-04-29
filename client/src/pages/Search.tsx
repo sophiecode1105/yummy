@@ -35,6 +35,7 @@ const Search = () => {
   let list: string[] = [];
 
   const listAdd = (materialName: string) => {
+    console.log(list);
     let index = list.indexOf(materialName);
     if (index === -1) {
       list.push(materialName);
@@ -53,6 +54,7 @@ const Search = () => {
       <ButtonWrap to="/recipelist">
         <RecipeButton
           onClick={() => {
+            console.log(list);
             setMaterialList(list);
           }}
         >
