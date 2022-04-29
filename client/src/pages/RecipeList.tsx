@@ -29,8 +29,7 @@ const Get_FoodList = gql`
 
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
-  console.log("searchMaterails");
-  console.log(searchMaterails);
+
   let {
     loading,
     data = { searchRecipe: [] }, //data가 undefined => 이후에 채워짐 , type을 맞추고 undefined일때 타입을 맞추기위한 처리
