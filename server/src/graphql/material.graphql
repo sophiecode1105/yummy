@@ -22,4 +22,5 @@ type Query {
 type Mutation {
   createMaterial(info: inputMaterial!): Material
   updateMaterial(info: updateMaterial!): Material
+  setMaterial: Material
 }

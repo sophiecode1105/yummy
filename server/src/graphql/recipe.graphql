@@ -21,7 +21,7 @@ input updateRecipe {
 type Query {
   getAllRecipe: [Recipe]
   getRecipe(id: Int!): Recipe
-  searchRecipe(materialName: String!): [Recipe]
+  searchRecipe(materialName: [String]!): [Recipe]
 }
 
 type Mutation {

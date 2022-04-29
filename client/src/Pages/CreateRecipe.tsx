@@ -42,8 +42,6 @@ const CreateRecipe = () => {
       },
     });
 
-    console.log(RecipeData);
-    console.log(inputContents);
     const { data: ContentsData = { createContent: {} } } = await content({
       variables: {
         info: inputContents,

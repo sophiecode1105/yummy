@@ -42,6 +42,7 @@ const Search = () => {
       list.splice(index, 1);
     }
   };
+
   return (
     <Container>
       <MaterialListContainer>
