@@ -1,12 +1,13 @@
 import { useState } from "react";
-import Content from "../Components/CreateRecipe/Content";
+import Content from "../components/CreateRecipe/Content";
 import { content } from "../utils/typeDefs";
 import { gql, useMutation } from "@apollo/client";
-import RecipeTitle from "../Components/CreateRecipe/RecipeTitle";
+import RecipeTitle from "../components/CreateRecipe/RecipeTitle";
 import { useRecoilValue } from "recoil";
 import { materialList, title } from "../state/state";
-import Tag from "../Components/Recipe/Tag";
-import Choice from "../Components/CreateRecipe/Choice";
+import Tag from "../components/Recipe/Tag";
+import Choice from "../components/CreateRecipe/Choice";
+import { Container } from "../styled/create";
 
 const postRecipe = gql`
   mutation ($info: createRecipe!) {
@@ -59,16 +60,15 @@ const CreateRecipe = () => {
     setRender(render + 1);
   };
   return (
-    <div>
-      CreateRecipe
-      <RecipeTitle />
+    <Container>
       <Choice />
+      <RecipeTitle />
       {prevImg.map((img: string, idx: number) => {
         return <Content key={idx} idx={idx} inputContents={inputContents} prevImg={prevImg} />;
       })}
       <button onClick={add}>Add</button>
       <button onClick={complete}>complete</button>
-    </div>
+    </Container>
   );
 };
 

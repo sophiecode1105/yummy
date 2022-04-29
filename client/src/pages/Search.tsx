@@ -4,7 +4,7 @@ import { gql, useQuery } from "@apollo/client";
 
 import { allMaterials, materialList } from "../state/state";
 import { useSetRecoilState } from "recoil";
-import Material from "../Components/Search/Material";
+import Material from "../components/Search/Material";
 import { useEffect } from "react";
 import { material } from "../utils/typeDefs";
 
