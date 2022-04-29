@@ -1,9 +1,9 @@
 import { materialList } from '../state/state';
 import { Container, FoodImg, HatImg, Title, KnifeImg, TitleWrapper } from '../styled/recipeList';
-import Tag from '../Components/Recipe/Tag';
+import Tag from '../components/Recipe/Tag';
 import chefHat from '../assets/chefHat.png';
 import kitchenKinfe from '../assets/kitchenKnife.png';
-import Food from '../Components/Recipe/Food';
+import Food from '../components/Recipe/Food';
 import { gql, useQuery } from '@apollo/client';
 import { useRecoilValue } from 'recoil';
 

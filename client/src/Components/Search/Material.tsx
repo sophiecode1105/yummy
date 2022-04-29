@@ -1,6 +1,6 @@
 import { MaterialName } from '../../styled/materialList';
 
-import { material } from '../../state/typeDefs';
+import { material } from '../../utils/typeDefs';
 import { useState } from 'react';
 
 const Material = ({ el, listAdd }: { el: material; listAdd: Function }) => {

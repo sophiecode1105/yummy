@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
-import { material } from "../../state/typeDefs";
-import Tag from "../Recipe/Tag";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { allMaterials, title } from "../../state/state";
+import { useState } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { material } from '../../utils/typeDefs';
+import Tag from '../Recipe/Tag';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { allMaterials, title } from '../../state/state';
 const Get_Materials = gql`
   query {
     getAllMaterial {
