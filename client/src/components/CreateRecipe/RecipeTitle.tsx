@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
-import { material } from "../../utils/typeDefs";
-import Tag from "../Recipe/Tag";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { allMaterials, title } from "../../state/state";
+import { useState } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { material } from '../../utils/typeDefs';
+import Tag from '../Recipe/Tag';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { allMaterials, title } from '../../state/state';
+import { Input, Label, Wrap } from '../../styled/create';
 const Get_Materials = gql`
   query {
     getAllMaterial {
@@ -19,15 +20,15 @@ const RecipeTitle = () => {
   const setTitle = useSetRecoilState(title);
 
   return (
-    <div>
-      <div>RecipeTitle</div>
-      <input
+    <Wrap>
+      <Label>레시피 제목</Label>
+      <Input
         onChange={(e) => {
           setTitle(e.target.value);
         }}
-        placeholder="제목을 입력하세요"
-      ></input>
-    </div>
+        placeholder="예: 참치 김치찌개 끓이기"
+      />
+    </Wrap>
   );
 };
 
