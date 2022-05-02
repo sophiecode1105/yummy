@@ -26,7 +26,7 @@ const RecipeTitle = () => {
         onChange={(e) => {
           setTitle(e.target.value);
         }}
-        placeholder="예: 참치 김치찌개 끓이기"
+        placeholder="예: 소고기 미역국 끓이기"
       />
     </Wrap>
   );

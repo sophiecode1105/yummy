@@ -56,7 +56,7 @@ export const ButtonWrap = styled(Link)`
   margin: 20px;
 `;
 
-export const RecipeButton = styled.div`
+export const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

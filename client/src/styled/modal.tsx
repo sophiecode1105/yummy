@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { Modal } from "../utils/typeDefs";
+import styled from 'styled-components';
+import { Modal } from '../utils/typeDefs';
 
 export const ModalContainer = styled.div<Modal>`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.modals ? "block" : "none")};
+  display: ${(props) => (props.modals ? 'block' : 'none')};
   /* border: 10px solid red; */
 `;
 
@@ -89,6 +89,17 @@ export const UserAvatar = styled.img`
   object-fit: cover;
   cursor: pointer;
 `;
+
+export const Avatar = styled.img`
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+`;
 export const UpText = styled.div`
   position: absolute;
   opacity: 0;
@@ -98,6 +109,24 @@ export const UpText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const ContentImgLabel = styled.label`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 30px 0px;
+  background-color: rgb(250, 242, 235);
+  color: grey;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 export const ImgFile = styled.input`
@@ -233,6 +262,10 @@ export const SendButton = styled(Button)`
 export const NextButton = styled(Button)`
   width: 70px;
   height: 25px;
+`;
+
+export const SignUpButton = styled(NextButton)`
+  margin: 20px 0px;
 `;
 
 export const Errorbox = styled.div`

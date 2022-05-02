@@ -1,11 +1,11 @@
-import { materialList } from "../state/state";
-import { Container, FoodImg, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
-import Tag from "../components/Recipe/Tag";
-import chefHat from "../assets/chefHat.png";
-import kitchenKinfe from "../assets/kitchenKnife.png";
-import Food from "../components/Recipe/Food";
-import { gql, useQuery } from "@apollo/client";
-import { useRecoilValue } from "recoil";
+import { materialList } from '../state/state';
+import { Container, FoodImg, HatImg, Title, KnifeImg, TitleWrapper } from '../styled/recipeList';
+import Tag from '../components/Recipe/Tag';
+import chefHat from '../assets/chefHat.png';
+import kitchenKinfe from '../assets/kitchenKnife.png';
+import Food from '../components/Recipe/Food';
+import { gql, useQuery } from '@apollo/client';
+import { useRecoilValue } from 'recoil';
 
 const Get_FoodList = gql`
   query ($materialName: [String]!) {
@@ -36,7 +36,7 @@ const RecipeList = () => {
     error,
   } = useQuery(Get_FoodList, { variables: { materialName: searchMaterails } });
 
-  console.log("data", data);
+  console.log('data', data);
 
   return (
     <Container>
@@ -46,7 +46,7 @@ const RecipeList = () => {
         <KnifeImg src={kitchenKinfe} />
       </TitleWrapper>
       <Tag />
-      {data.searchRecipe.map((el: {}, i: string) => {
+      {data.searchRecipe?.map((el: {}, i: string) => {
         return <Food desc={el} key={i} />;
       })}
     </Container>
