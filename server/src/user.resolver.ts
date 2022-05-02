@@ -220,4 +220,65 @@ export class UserResolver {
       throw new Error('로그인을 다시해주세요');
     }
   }
+
+  @Query()
+  async kakao(@Args('code') code: string): Promise<string> {
+    try {
+      const data = await axios.post(
+        `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://localhost:3000`,
+        {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+        },
+        { withCredentials: true },
+      );
+
+      console.log('data');
+      console.log(data);
+
+      // const {
+      //   data: { email },
+      // } = await axios.get(
+      //   `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`,
+      //   {
+      //     headers: {
+      //       authorization: `token ${access_token}`,
+      //       accept: 'application/json',
+      //     },
+      //   },
+      // );
+
+      // let userInfo = await this.prisma.users.findUnique({
+      //   where: { email },
+      // });
+      // if (!userInfo) {
+      //   const nickName = Math.random()
+      //     .toString(36)
+      //     .replace(/[^a-z]+/g, '')
+      //     .substr(0, 5);
+
+      //   const createUser = await this.prisma.users.create({
+      //     data: { email, nickName },
+      //   });
+
+      //   const token = this.jwtService.sign({
+      //     id: createUser.id,
+      //     email,
+      //     nickName,
+      //   });
+      //   return token;
+      // }
+      // const token = this.jwtService.sign({
+      //   id: userInfo.id,
+      //   email,
+      //   nickName: userInfo.nickName,
+      // });
+
+      return;
+    } catch (err) {
+      console.log(err);
+      // throw new Error('로그인을 다시해주세요');
+    }
+  }
 }
