@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { handleFileUpload } from 'uploads/awsUploader';
 import { JwtService } from '@nestjs/jwt';
+import axios from 'axios';
 
 process.env.ACCESS_SECRET;
 @Resolver()
@@ -35,9 +36,14 @@ export class UserResolver {
   }
 
   @Query()
-  async getUser(@Context('token') token: string): Promise<Users> {
+  async getUser(
+    @Context('token')
+    token: string,
+  ): Promise<Users> {
     try {
+      console.log('1');
       const userInfo = this.jwtService.verify(token);
+      console.log('2', userInfo);
 
       return this.prisma.users.findUnique({
         where: { id: userInfo.id },
@@ -47,7 +53,8 @@ export class UserResolver {
         },
       });
     } catch (err) {
-      console.log(err);
+      console.log('3', err);
+      throw new Error('로그인을 다시해주세요');
     }
   }
 
@@ -150,6 +157,67 @@ export class UserResolver {
       }
     } catch (err) {
       console.log(err);
+    }
+  }
+  @Query()
+  async google(@Args('code') code: string): Promise<string> {
+    try {
+      console.log('code');
+      console.log(code);
+      const {
+        data: { access_token },
+      } = await axios.post(
+        `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT_ID}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=http://localhost:3000&grant_type=authorization_code`,
+        {
+          headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        },
+        { withCredentials: true },
+      );
+
+      console.log('access_token');
+      console.log(access_token);
+
+      const {
+        data: { email },
+      } = await axios.get(
+        `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`,
+        {
+          headers: {
+            authorization: `token ${access_token}`,
+            accept: 'application/json',
+          },
+        },
+      );
+
+      let userInfo = await this.prisma.users.findUnique({
+        where: { email },
+      });
+      if (!userInfo) {
+        const nickName = Math.random()
+          .toString(36)
+          .replace(/[^a-z]+/g, '')
+          .substr(0, 5);
+
+        const createUser = await this.prisma.users.create({
+          data: { email, nickName },
+        });
+
+        const token = this.jwtService.sign({
+          id: createUser.id,
+          email,
+          nickName,
+        });
+        return token;
+      }
+      const token = this.jwtService.sign({
+        id: userInfo.id,
+        email,
+        nickName: userInfo.nickName,
+      });
+
+      return token;
+    } catch (err) {
+      throw new Error('로그인을 다시해주세요');
     }
   }
 }

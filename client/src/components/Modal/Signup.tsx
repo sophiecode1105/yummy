@@ -1,7 +1,7 @@
 import { useForm, ValidationRule } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { emailCertiNum, joinUserInfo } from '../../state/state';
+import { emailCertiNum, joinUserInfo, modal, signUp } from '../../state/state';
 import { FormData, joinInfo } from '../../utils/typeDefs';
 import { useState } from 'react';
 
@@ -44,9 +44,12 @@ const Join = gql`
 
 const Signup = () => {
   const [certiNum, setCertiNum] = useRecoilState(emailCertiNum);
+
   const [isFirst, setIsFirst] = useState(true);
   const [img, setImg] = useState<File | undefined>();
   const [intro, setIntro] = useState('');
+  const setModal = useSetRecoilState(modal);
+  const setSign = useSetRecoilState(signUp);
   const {
     register,
     getValues,
@@ -118,6 +121,8 @@ const Signup = () => {
         },
       },
     });
+    setSign(false);
+    setModal(false);
   };
 
   return (

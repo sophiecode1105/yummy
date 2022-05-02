@@ -104,6 +104,7 @@ export class RecipeResolver {
       });
     } catch (err) {
       console.log(err);
+      throw new Error('로그인을 다시해주세요');
     }
   }
 

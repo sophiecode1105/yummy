@@ -1,5 +1,6 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { modal, signUp, token } from "../../state/state";
 import {
@@ -21,21 +22,35 @@ const postLogin = gql`
     login(email: $email, password: $password)
   }
 `;
+const googleLogin = gql`
+  query ($code: String!) {
+    google(code: $code)
+  }
+`;
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+
   const setToken = useSetRecoilState(token);
-
   const setModal = useSetRecoilState(modal);
-
   const signUpClick = useSetRecoilState(signUp);
   const [errorMessage, setErrorMessage] = useState("");
   const handleInputValue = (key: any) => (e: any) => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
+  const nav = useNavigate();
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get("code");
+  const {
+    data = { google: "" },
+    loading,
+    error,
+  } = useQuery(googleLogin, {
+    variables: { code },
+  });
   let [postlogin] = useMutation(postLogin);
 
   const handleLogin = async () => {
@@ -51,7 +66,7 @@ function Signin() {
         password,
       },
     });
-
+    console.log(email, password);
     if (data.login !== "") {
       setModal(false);
       setToken(data.login);
@@ -59,6 +74,13 @@ function Signin() {
     setLoginInfo({ email: "", password: "" });
     window.location.reload();
   };
+
+  if (data.google !== "") {
+    setToken(data.google);
+
+    nav("/");
+    window.location.reload();
+  }
 
   return (
     <>
@@ -83,7 +105,9 @@ function Signin() {
           <SocalLoginTitle>SOCIAL LOGIN</SocalLoginTitle>
           <SocialButtonWrap>
             <KakaoButon>kakao</KakaoButon>
-            <GoogleButton>google</GoogleButton>
+            <GoogleButton href="https://accounts.google.com/o/oauth2/v2/auth?client_id=786693724856-3b1fu2t449chp8q8d4bh7omg8k5f3cqu.apps.googleusercontent.com&redirect_uri=http://localhost:3000&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email">
+              google
+            </GoogleButton>
           </SocialButtonWrap>
           <ButtonWrap>
             <InButton type="submit" onClick={handleLogin}>
