@@ -45,11 +45,13 @@ export class RecipeResolver {
 
   @Query()
   async searchRecipe(
-    @Args('materialName') metarialName: string,
+    @Args('materialName') materialName: string[],
   ): Promise<Recipes[]> {
+    console.log('materialName');
+    console.log(materialName);
     try {
-      const ex = await this.prisma.recipes.findMany({
-        where: { materials: { search: metarialName } },
+      let ex = await this.prisma.recipes.findMany({
+        where: { materials: { contains: materialName[0] } },
         include: {
           user: true,
           contents: true,
@@ -57,7 +59,19 @@ export class RecipeResolver {
         },
       });
 
-      return ex;
+      const result = ex.filter((el) => {
+        for (let i = 1; i < materialName.length; i++) {
+          if (!el.materials.includes(materialName[i])) {
+            return false;
+          }
+        }
+        return true;
+      });
+
+      console.log('result');
+      console.log(result);
+
+      return result;
     } catch (err) {
       console.log(err);
     }
@@ -90,6 +104,7 @@ export class RecipeResolver {
       });
     } catch (err) {
       console.log(err);
+      throw new Error('로그인을 다시해주세요');
     }
   }
 

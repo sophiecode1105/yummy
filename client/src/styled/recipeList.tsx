@@ -169,7 +169,7 @@ export const FoodMaterials = styled.div`
   width: auto;
   font-size: 20px;
   margin: 10px 5px;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.4);
 `;
 
 export const SubDesc = styled.div`

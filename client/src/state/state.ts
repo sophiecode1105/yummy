@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { joinInfo } from "./typeDefs";
+import { joinInfo } from "../utils/typeDefs";
 
 import { recoilPersist } from "recoil-persist";
 

@@ -21,6 +21,7 @@ export const LinkTag = styled(Link)`
   color: black;
   text-decoration: none;
 `;
+
 export const Div = styled.div`
   padding: 0px 20px;
   cursor: pointer;
