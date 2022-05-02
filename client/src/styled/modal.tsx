@@ -174,7 +174,7 @@ export const SocialButtonWrap = styled.div`
   width: 80%;
 `;
 
-export const SocialButton = styled.button`
+export const SocialButton = styled.a`
   height: 50px;
   border-radius: 100%;
   cursor: pointer;
