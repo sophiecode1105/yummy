@@ -7,7 +7,6 @@ import { ChoiceContainer, Label, List, ListWrap, SelectContent, Wrap } from '../
 const Choice = () => {
   const [materials, setMaterials] = useState<string[]>([]);
   const getAllMaterails = useRecoilValue(allMaterials);
-  console.log(materials);
 
   return (
     <Wrap>
