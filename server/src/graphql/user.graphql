@@ -31,6 +31,8 @@ input updateUser {
 type Query {
   getAllUser: [User]
   getUser: User
+  google(code: String!): String
+  kakao(code: String!): String
 }
 
 type Mutation {
