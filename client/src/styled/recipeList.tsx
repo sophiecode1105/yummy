@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Title = styled.h1`
   text-align: center;
@@ -122,7 +122,7 @@ export const FoodsWrap = styled.div`
   }
 `;
 
-export const FoodList = styled(Link)`
+export const FoodList = styled.div`
   display: flex;
   justify-content: center;
   width: 95%;
@@ -151,11 +151,12 @@ export const Desc = styled.div`
   width: 60%;
 `;
 
-export const FoodDesc = styled.div`
+export const FoodDesc = styled(Link)`
   width: 98%;
   margin: 15px auto 0px auto;
   height: 65%;
   border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  text-decoration: none;
 `;
 
 export const FoodName = styled.h1`
@@ -167,7 +168,7 @@ export const FoodName = styled.h1`
 
 export const FoodMaterials = styled.div`
   width: auto;
-  font-size: 20px;
+  font-size: 16px;
   margin: 10px 5px;
   color: rgba(0, 0, 0, 0.4);
 `;
@@ -208,6 +209,7 @@ export const LikeWrap = styled.div`
   padding: 10px;
   border-radius: 20px;
   color: black;
+  cursor: pointer;
 `;
 
 export const LikeCount = styled.div`

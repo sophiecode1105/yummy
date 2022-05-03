@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { Recipes } from '@prisma/client';
+import { Recipes, Users } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -46,9 +46,8 @@ export class RecipeResolver {
   @Query()
   async searchRecipe(
     @Args('materialName') materialName: string[],
-  ): Promise<Recipes[]> {
-    console.log('materialName');
-    console.log(materialName);
+    @Context('token') token: string,
+  ): Promise<{}> {
     try {
       let ex = await this.prisma.recipes.findMany({
         where: { materials: { contains: materialName[0] } },
@@ -58,7 +57,11 @@ export class RecipeResolver {
           likes: true,
         },
       });
+      let userInfo = {};
 
+      if (token) {
+        userInfo = this.jwtService.verify(token);
+      }
       const result = ex.filter((el) => {
         for (let i = 1; i < materialName.length; i++) {
           if (!el.materials.includes(materialName[i])) {
@@ -67,11 +70,9 @@ export class RecipeResolver {
         }
         return true;
       });
+      const exe = { userInfo, recipeList: result };
 
-      console.log('result');
-      console.log(result);
-
-      return result;
+      return exe;
     } catch (err) {
       console.log(err);
     }
