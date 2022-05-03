@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { content } from "../../utils/typeDefs";
-import { Container } from "../../styled/create";
-import { ImgFile, ImgLabel, UpText, UserAvatar } from "../../styled/modal";
+import { useState } from 'react';
+import { content } from '../../utils/typeDefs';
+import {
+  Container,
+  ContentContainer,
+  ContentInput,
+  ContentWrap,
+  Inputwrap,
+  Label,
+  OrderNum,
+} from '../../styled/create';
+import { Avatar, ContentImgLabel, ImgFile, ImgLabel, UpText, UserAvatar } from '../../styled/modal';
 
-const Content = ({
-  idx,
-  inputContents,
-  prevImg,
-}: {
-  idx: number;
-  inputContents: content[];
-  prevImg: string[];
-}) => {
+const Content = ({ idx, inputContents, prevImg }: { idx: number; inputContents: content[]; prevImg: string[] }) => {
   const [render, setRender] = useState(0);
 
   const previewFile = (file: File) => {
@@ -26,35 +26,36 @@ const Content = ({
     reader.readAsDataURL(file);
   };
 
-  return (
-    <Container>
-      <ImgLabel htmlFor="input_file">
-        <UpText>
-          이미지 <br />
-          업로
-        </UpText>
-        <UserAvatar src={prevImg[idx]} />
-        <ImgFile
-          id="input_file"
-          type="file"
-          accept="*"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            const target = event.target as HTMLInputElement;
-            if (target.files) {
-              const file = target.files[0];
+  console.log('idx num', idx);
 
-              inputContents[idx].img = file;
-              return previewFile(file);
-            }
+  return (
+    <ContentWrap>
+      <OrderNum>STEP {idx + 1}</OrderNum>
+      <Inputwrap>
+        <ContentInput
+          onChange={(e) => {
+            inputContents[idx].explain = e.target.value;
           }}
         />
-      </ImgLabel>
-      <input
-        onChange={(e) => {
-          inputContents[idx].explain = e.target.value;
-        }}
-      ></input>
-    </Container>
+        <ContentImgLabel htmlFor="input_file">
+          <Avatar src={prevImg[idx]} />
+          <ImgFile
+            id="input_file"
+            type="file"
+            accept="*"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const target = event.target as HTMLInputElement;
+              if (target.files) {
+                const file = target.files[0];
+
+                inputContents[idx].img = file;
+                return previewFile(file);
+              }
+            }}
+          />
+        </ContentImgLabel>
+      </Inputwrap>
+    </ContentWrap>
   );
 };
 

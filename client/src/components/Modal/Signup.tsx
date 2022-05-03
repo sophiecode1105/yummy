@@ -1,12 +1,12 @@
-import { useForm, ValidationRule } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { emailCertiNum, joinUserInfo, modal, signUp } from "../../state/state";
-import { FormData, joinInfo } from "../../utils/typeDefs";
-import { useState } from "react";
+import { useForm, ValidationRule } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { emailCertiNum, joinUserInfo, modal, signUp } from '../../state/state';
+import { FormData, joinInfo } from '../../utils/typeDefs';
+import { useState } from 'react';
 
-import netlify from "../../assets/netlify-logo.png";
-import welcome from "../../assets/welcome.png";
+import netlify from '../../assets/netlify-logo.png';
+import welcome from '../../assets/welcome.png';
 import {
   Container,
   Errorbox,
@@ -22,7 +22,8 @@ import {
   UpText,
   ImgLabel,
   WelcomeImg,
-} from "../../styled/modal";
+  SignUpButton,
+} from '../../styled/modal';
 
 const Certify = gql`
   mutation ($email: String!) {
@@ -46,7 +47,7 @@ const Signup = () => {
 
   const [isFirst, setIsFirst] = useState(true);
   const [img, setImg] = useState<File | undefined>();
-  const [intro, setIntro] = useState("");
+  const [intro, setIntro] = useState('');
   const setModal = useSetRecoilState(modal);
   const setSign = useSetRecoilState(signUp);
   const {
@@ -54,7 +55,7 @@ const Signup = () => {
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ mode: "onChange" });
+  } = useForm<FormData>({ mode: 'onChange' });
 
   const [emailCer, { data, loading, error }] = useMutation(Certify);
 
@@ -74,7 +75,7 @@ const Signup = () => {
     const files = e.target.files;
     if (files && files.length === 1) {
       const file = files[0];
-      console.log("file", file);
+      console.log('file', file);
     }
   };
 
@@ -88,12 +89,12 @@ const Signup = () => {
 
   const myPattern: ValidationRule<RegExp> = {
     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-    message: "이메일 형식으로 입력해주세요",
+    message: '이메일 형식으로 입력해주세요',
   };
 
   const passwordPattern: ValidationRule<RegExp> = {
     value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-    message: "8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요",
+    message: '8자이상 / 영문 / 숫자 / 특수문자를 조합해주세요',
   };
 
   const previewFile = (file: File) => {
@@ -134,8 +135,8 @@ const Signup = () => {
             <Input
               type="text"
               placeholder="이메일"
-              {...register("email", {
-                required: "이메일을 입력해주세요",
+              {...register('email', {
+                required: '이메일을 입력해주세요',
                 pattern: myPattern,
               })}
             />
@@ -147,11 +148,11 @@ const Signup = () => {
           <Input
             type="text"
             placeholder="인증번호"
-            {...register("certifyNumber", {
-              required: "인증번호를 입력해주세요",
+            {...register('certifyNumber', {
+              required: '인증번호를 입력해주세요',
               validate: {
                 matchPassword: (value: number) => {
-                  return certiNum === Number(value) || "인증번호가 일치하지 않습니다.";
+                  return certiNum === Number(value) || '인증번호가 일치하지 않습니다.';
                 },
               },
             })}
@@ -160,8 +161,8 @@ const Signup = () => {
           <Input
             type="password"
             placeholder="비밀번호"
-            {...register("password", {
-              required: "비밀번호를 입력해주세요",
+            {...register('password', {
+              required: '비밀번호를 입력해주세요',
               pattern: passwordPattern,
             })}
           />
@@ -169,12 +170,12 @@ const Signup = () => {
           <Input
             type="password"
             placeholder="비밀번호확인"
-            {...register("password2", {
-              required: "비밀번호를 입력해주세요",
+            {...register('password2', {
+              required: '비밀번호를 입력해주세요',
               validate: {
                 matchPassword: (value) => {
                   const { password } = getValues();
-                  return password === value || "비밀번호가 일치하지 않습니다.";
+                  return password === value || '비밀번호가 일치하지 않습니다.';
                 },
               },
             })}
@@ -184,8 +185,8 @@ const Signup = () => {
           <Input
             type="text"
             placeholder="닉네임"
-            {...register("nickName", {
-              required: "닉네임을 입력해주세요",
+            {...register('nickName', {
+              required: '닉네임을 입력해주세요',
             })}
           />
           <Errorbox>{errors.nickName?.message}</Errorbox>
@@ -224,7 +225,7 @@ const Signup = () => {
               }}
             />
           </InputWrap>
-          <NextButton onClick={postJoin}>Next</NextButton>
+          <SignUpButton onClick={postJoin}>Next</SignUpButton>
         </>
       )}
     </Container>

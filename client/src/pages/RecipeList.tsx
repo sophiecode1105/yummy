@@ -6,7 +6,6 @@ import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { useRecoilValue } from "recoil";
-import { useState } from "react";
 
 const Get_FoodList = gql`
   query ($materialName: [String]!) {
