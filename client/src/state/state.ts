@@ -49,3 +49,9 @@ export const token = atom<string | undefined>({
   default: undefined,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const social = atom<string>({
+  key: "social",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
