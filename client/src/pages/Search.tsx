@@ -1,12 +1,12 @@
-import { ButtonWrap, Container, MaterialListContainer, Button } from '../styled/materialList';
+import { ButtonWrap, Container, MaterialListContainer, Button } from "../styled/materialList";
 
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from "@apollo/client";
 
-import { allMaterials, materialList } from '../state/state';
-import { useSetRecoilState } from 'recoil';
-import Material from '../components/Search/Material';
-import { useEffect } from 'react';
-import { material } from '../utils/typeDefs';
+import { allMaterials, materialList } from "../state/state";
+import { useSetRecoilState } from "recoil";
+import Material from "../components/Search/Material";
+import { useEffect } from "react";
+import { material } from "../utils/typeDefs";
 
 const Get_Materials = gql`
   query {
@@ -55,6 +55,7 @@ const Search = () => {
         <Button
           onClick={() => {
             console.log(list);
+            window.scrollTo(0, 0);
             setMaterialList(list);
           }}
         >

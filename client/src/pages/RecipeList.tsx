@@ -1,11 +1,11 @@
-import { materialList, searchPage } from "../state/state";
+import { materialList } from "../state/state";
 import { Container, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
 import Tag from "../components/Recipe/Tag";
 import chefHat from "../assets/chefHat.png";
 import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
 import { gql, useLazyQuery, useMutation } from "@apollo/client";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 
 const Get_FoodList = gql`
@@ -43,7 +43,7 @@ const postLike = gql`
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
-  const [page, setPage] = useRecoilState(searchPage);
+  const [page, setPage] = useState(0);
   const [list, setList] = useState<any>([]);
   let [
     getList,

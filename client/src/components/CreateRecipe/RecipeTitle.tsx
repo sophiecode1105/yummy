@@ -1,19 +1,8 @@
-import { useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { material } from '../../utils/typeDefs';
-import Tag from '../Recipe/Tag';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { allMaterials, title } from '../../state/state';
-import { Input, Label, Wrap } from '../../styled/create';
-const Get_Materials = gql`
-  query {
-    getAllMaterial {
-      id
-      name
-      img
-    }
-  }
-`;
+import { gql, useQuery } from "@apollo/client";
+import { useSetRecoilState } from "recoil";
+import { title } from "../../state/state";
+import { Input, Label, Wrap } from "../../styled/create";
+import { Get_Materials } from "../../utils/api";
 
 const RecipeTitle = () => {
   //바뀔때 다시 받고싶으면? refetch라는 기능을 쓰면 된다.

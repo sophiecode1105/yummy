@@ -41,9 +41,7 @@ export class UserResolver {
     token: string,
   ): Promise<Users> {
     try {
-      console.log('1');
       const userInfo = this.jwtService.verify(token);
-      console.log('2', userInfo);
 
       return this.prisma.users.findUnique({
         where: { id: userInfo.id },
@@ -53,7 +51,7 @@ export class UserResolver {
         },
       });
     } catch (err) {
-      console.log('3', err);
+      console.log(err);
       throw new Error('로그인을 다시해주세요');
     }
   }

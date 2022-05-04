@@ -1,20 +1,19 @@
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
-import { useMediaQuery } from 'react-responsive';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { modal, sideModal, token } from '../state/state';
-import { Container, Div, LinkTag, Img, RightCon2, BurgerIcon } from '../styled/header';
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
+import { useMediaQuery } from "react-responsive";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { modal, sideModal, token } from "../state/state";
+import { Container, Div, LinkTag, Img, RightCon2, BurgerIcon } from "../styled/header";
 
 const Header = () => {
-  const isPc = useMediaQuery({ query: '(min-width: 768px)' }, undefined);
+  const isPc = useMediaQuery({ query: "(min-width: 768px)" }, undefined);
   const modals = useSetRecoilState(modal);
   const [sides, setSides] = useRecoilState(sideModal);
   const [tokens, setToken] = useRecoilState(token);
-  console.log(tokens);
   return (
     <Container>
       <Link to="/">
-        {' '}
+        {" "}
         <Img src={logo} />
       </Link>
       {isPc ? (

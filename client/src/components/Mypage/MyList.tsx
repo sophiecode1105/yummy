@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import { TitleWrap, Title } from '../../styled/mypage';
+import { useState } from "react";
+import { TitleWrap, Title } from "../../styled/mypage";
 
 const MyList = () => {
-  const TitleList = ['Likes', 'My Recipes'];
-  const [focusedTitle, setFocusedTitle] = useState<string>('Likes');
+  const TitleList = ["Likes", "My Recipes"];
+  const [focusedTitle, setFocusedTitle] = useState<string>("Likes");
 
   const clickEffect = (title: string) => {
     setFocusedTitle(title);
   };
-  console.log('타이틀', focusedTitle);
 
   return (
     <TitleWrap>

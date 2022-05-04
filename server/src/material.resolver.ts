@@ -56,7 +56,6 @@ export class MaterialResolver {
     );
 
     row.map(async (el, idx) => {
-      console.log(idx);
       const recipe = await this.prisma.recipes.create({
         data: {
           title: el.RCP_NM,
@@ -71,7 +70,7 @@ export class MaterialResolver {
           likes: true,
         },
       });
-      console.log(recipe.id);
+
       for (let i = 1; i <= 20; i++) {
         let num = String(i).padStart(2, '0');
         let explain = `MANUAL${num}`;
@@ -92,10 +91,8 @@ export class MaterialResolver {
             },
           });
         }
-        if (i === 20) {
-          console.log('컨텐츠 마지막');
-        }
       }
+      console.log('완료');
     });
 
     try {

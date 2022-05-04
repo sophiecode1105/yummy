@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { Recipes, Users } from '@prisma/client';
+import { Recipes } from '@prisma/client';
 import { PrismaService } from './prisma.service';
 
 @Resolver()

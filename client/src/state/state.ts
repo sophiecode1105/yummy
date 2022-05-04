@@ -55,8 +55,3 @@ export const social = atom<string>({
   default: "google",
   effects_UNSTABLE: [persistAtom],
 });
-
-export const searchPage = atom<number>({
-  key: "searchPage",
-  default: 0,
-});
