@@ -1,4 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
+import { useEffect } from "react";
+import MyList from "../components/Mypage/MyList";
+import Profile from "../components/Mypage/Profile";
 
 const getUser = gql`
   query {
@@ -22,11 +25,15 @@ const getUser = gql`
 `;
 
 const Mypage = () => {
-  const { loading, data, error, refetch } = useQuery(getUser);
-  console.log(data);
-  console.log(error?.message);
+  const { loading, data = { getUser: {} }, error } = useQuery(getUser);
+  // let { contents = [], materials = "", title = "", likes = [] } = data.getRecipe;
 
-  return <div>Mypage</div>;
+  return (
+    <>
+      <Profile userdata={data.getUser} />
+      <MyList />
+    </>
+  );
 };
 
 export default Mypage;

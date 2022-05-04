@@ -10,6 +10,11 @@ export const modal = atom<boolean>({
   default: false,
 });
 
+export const sideModal = atom<boolean>({
+  key: "sideModal",
+  default: false,
+});
+
 export const signUp = atom<boolean>({
   key: "signUp",
   default: false,

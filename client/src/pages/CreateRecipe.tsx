@@ -27,7 +27,7 @@ const postContents = gql`
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);
   const recipeTitle = useRecoilValue(title);
-  const material = useRecoilValue(materialList);
+  const [materials, setMaterials] = useState<string[]>([]);
   const [prevImg] = useState<string[]>([plus]);
 
   const [inputContents] = useState<content[]>([{ img: '', explain: '' }]);
@@ -36,10 +36,10 @@ const CreateRecipe = () => {
   const [content] = useMutation(postContents);
 
   const complete = async () => {
-    console.log(material.join(' & '));
+    console.log('뭐나오냐', materials.join(' '));
     const { data: RecipeData = { createRecipe: {} } } = await recipe({
       variables: {
-        info: { title: recipeTitle, materials: material.join(' & ') },
+        info: { title: recipeTitle, materials: materials.join(' ') },
       },
     });
 
@@ -60,7 +60,7 @@ const CreateRecipe = () => {
   };
   return (
     <Container>
-      <Choice />
+      <Choice materials={materials} setMaterials={setMaterials} />
       <RecipeTitle />
       <ContentContainer>
         <Label>요리 순서</Label>
