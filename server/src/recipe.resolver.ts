@@ -46,10 +46,13 @@ export class RecipeResolver {
   @Query()
   async searchRecipe(
     @Args('materialName') materialName: string[],
+    @Args('page') page: number,
     @Context('token') token: string,
   ): Promise<{}> {
     try {
       let ex = await this.prisma.recipes.findMany({
+        skip: page * 5,
+        take: 5,
         where: { materials: { contains: materialName[0] } },
         include: {
           user: true,

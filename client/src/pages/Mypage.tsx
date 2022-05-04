@@ -22,8 +22,8 @@ const getUser = gql`
 `;
 
 const Mypage = () => {
-  const { loading, data, error } = useQuery(getUser);
-
+  const { loading, data, error, refetch } = useQuery(getUser);
+  console.log(data);
   console.log(error?.message);
 
   return <div>Mypage</div>;

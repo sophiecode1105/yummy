@@ -47,6 +47,11 @@ export const token = atom<string | undefined>({
 
 export const social = atom<string>({
   key: "social",
-  default: "",
+  default: "google",
   effects_UNSTABLE: [persistAtom],
+});
+
+export const searchPage = atom<number>({
+  key: "searchPage",
+  default: 0,
 });
