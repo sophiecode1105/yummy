@@ -1,21 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-
-const recipe = gql`
-  query ($id: Int!) {
-    getRecipe(id: $id) {
-      title
-      materials
-      contents {
-        explain
-        img
-      }
-      likes {
-        userId
-      }
-    }
-  }
-`;
+import { recipe } from "../utils/api";
 
 const Detail = () => {
   const { id } = useParams();

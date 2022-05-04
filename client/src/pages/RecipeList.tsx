@@ -4,42 +4,11 @@ import Tag from "../components/Recipe/Tag";
 import chefHat from "../assets/chefHat.png";
 import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
+import { Get_FoodList, postLike } from "../utils/api";
 
-const Get_FoodList = gql`
-  query ($materialName: [String]!, $page: Int!) {
-    searchRecipe(materialName: $materialName, page: $page) {
-      recipeList {
-        id
-        title
-        materials
-        likes {
-          userId
-        }
-        user {
-          nickName
-          img
-        }
-        contents {
-          img
-        }
-      }
-      userInfo {
-        id
-      }
-    }
-  }
-`;
-
-const postLike = gql`
-  mutation ($recipeId: Int!, $userId: Int!) {
-    Like(recipeId: $recipeId, userId: $userId) {
-      id
-    }
-  }
-`;
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
