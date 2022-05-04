@@ -9,6 +9,7 @@ const Profile = ({
   let { email = '', nickName = '', img = '', intro = '', likes = [], recipes = [] } = userdata;
 
   console.log('이메일 나오니', email);
+  console.log('좋아요리스트', likes);
   return (
     <Container>
       <UserInfoBox>
