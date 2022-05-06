@@ -29,7 +29,6 @@ const CreateRecipe = () => {
   const [content] = useMutation(postContents);
 
   const complete = async () => {
-    console.log("뭐나오냐", materials.join(" "));
     const { data: RecipeData = { createRecipe: {} } } = await recipe({
       variables: {
         info: { title: recipeTitle, materials: materials.join(" ") },
@@ -42,8 +41,6 @@ const CreateRecipe = () => {
         recipeId: RecipeData.createRecipe.id,
       },
     });
-
-    console.log(ContentsData);
   };
 
   const add = () => {

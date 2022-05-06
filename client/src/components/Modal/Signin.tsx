@@ -2,6 +2,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { postLogin } from "../../graphql/query";
 import { modal, signUp, social, token } from "../../state/state";
 import {
   AlertBox,
@@ -16,14 +17,12 @@ import {
   SignInInput,
   SignInForm,
 } from "../../styled/modal";
-import { postLogin } from "../../graphql/query";
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
-
   const setToken = useSetRecoilState(token);
   const setModal = useSetRecoilState(modal);
   const signUpClick = useSetRecoilState(signUp);

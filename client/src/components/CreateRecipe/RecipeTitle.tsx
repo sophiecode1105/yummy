@@ -1,4 +1,5 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+
 import { useSetRecoilState } from "recoil";
 import { title } from "../../state/state";
 import { Input, Label, Wrap } from "../../styled/create";

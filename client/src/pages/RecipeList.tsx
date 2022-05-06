@@ -24,7 +24,6 @@ const RecipeList = () => {
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
-    fetchPolicy: "cache-and-network",
   });
 
   const [like] = useMutation(postLike);
@@ -45,10 +44,9 @@ const RecipeList = () => {
   };
 
   useEffect(() => {
+    console.log("유즈이펙트");
     getData();
-
     window.addEventListener("scroll", infiniteScroll);
-
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
@@ -63,9 +61,7 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return (
-          <Food like={like} refetch={refetch} info={data.searchRecipe.userInfo} desc={el} key={i} />
-        );
+        return <Food like={like} refetch={refetch} info={data.searchRecipe.userInfo} desc={el} key={i} />;
       })}
     </Container>
   );
