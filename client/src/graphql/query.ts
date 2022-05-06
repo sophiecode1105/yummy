@@ -1,8 +1,4 @@
-import { gql } from '@apollo/client';
-import { useRecoilState } from 'recoil';
-import { social } from '../state/state';
-
-const [socialType] = useRecoilState(social);
+import { gql } from "@apollo/client";
 
 export const Get_Materials = gql`
   query {
@@ -18,12 +14,6 @@ export const postLogin = gql`
   mutation ($email: String!, $password: String!) {
     login(email: $email, password: $password)
   }
-`;
-
-export const socialLogin = gql`
-query ($code: String!) {
-  ${socialType}(code: $code)
-}
 `;
 
 export const Certify = gql`

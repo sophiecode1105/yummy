@@ -12,12 +12,11 @@ import {
   UserAvatar,
   UserDesc,
   UserNickname,
-} from "../../styled/recipeList";
-import UndefinedImg from "../../assets/noImg.png";
-
+} from '../../styled/recipeList';
+import UndefinedImg from '../../assets/noImg.png';
 const Food = ({ desc, info, refetch, like }: any) => {
-  let { id = 0, contents = [], likes = [], title = "", user = {}, materials = "" } = desc;
-  materials = materials.slice(0, 80) + "...";
+  let { id = 0, contents = [], likes = [], title = '', user = {}, materials = '' } = desc;
+  materials = materials.slice(0, 80) + '...';
 
   let check = false;
   likes.map((el: { __typename: string; userId: number }) => {

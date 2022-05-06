@@ -1,11 +1,11 @@
-import { ButtonWrap, Container, MaterialListContainer, Button } from "../styled/materialList";
-import { useQuery } from "@apollo/client";
-import { allMaterials, materialList } from "../state/state";
-import { useSetRecoilState } from "recoil";
-import Material from "../components/Search/Material";
-import { useEffect } from "react";
-import { material } from "../utils/typeDefs";
-import { Get_Materials } from "../utils/api";
+import { ButtonWrap, Container, MaterialListContainer, Button } from '../styled/materialList';
+import { useQuery } from '@apollo/client';
+import { allMaterials, materialList } from '../state/state';
+import { useSetRecoilState } from 'recoil';
+import Material from '../components/Search/Material';
+import { useEffect } from 'react';
+import { material } from '../utils/typeDefs';
+import { Get_Materials } from '../graphql/query';
 
 const Search = () => {
   let { loading, data, error } = useQuery(Get_Materials);

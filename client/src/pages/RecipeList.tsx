@@ -1,15 +1,15 @@
-import { materialList } from "../state/state";
-import { Container, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
-import Tag from "../components/Recipe/Tag";
-import chefHat from "../assets/chefHat.png";
-import kitchenKinfe from "../assets/kitchenKnife.png";
-import Food from "../components/Recipe/Food";
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
-import { Get_FoodList, postLike } from "../utils/api";
+import { materialList } from '../state/state';
+import { Container, HatImg, Title, KnifeImg, TitleWrapper } from '../styled/recipeList';
+import Tag from '../components/Recipe/Tag';
+import chefHat from '../assets/chefHat.png';
+import kitchenKinfe from '../assets/kitchenKnife.png';
+import Food from '../components/Recipe/Food';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
+import { Get_FoodList, postLike } from '../graphql/query';
 
-const HTML: any = document.querySelector("html");
+const HTML: any = document.querySelector('html');
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
   const [page, setPage] = useState(0);
@@ -24,7 +24,6 @@ const RecipeList = () => {
     },
   ] = useLazyQuery(Get_FoodList, {
     variables: { materialName: searchMaterails, page },
-    fetchPolicy: "cache-and-network",
   });
 
   const [like] = useMutation(postLike);
@@ -45,12 +44,11 @@ const RecipeList = () => {
   };
 
   useEffect(() => {
+    console.log('유즈이펙트');
     getData();
-
-    window.addEventListener("scroll", infiniteScroll);
-
+    window.addEventListener('scroll', infiniteScroll);
     return () => {
-      window.removeEventListener("scroll", infiniteScroll);
+      window.removeEventListener('scroll', infiniteScroll);
     };
   }, [page, searchMaterails]);
 
@@ -63,9 +61,7 @@ const RecipeList = () => {
       </TitleWrapper>
       <Tag />
       {list.map((el: {}, i: string) => {
-        return (
-          <Food like={like} refetch={refetch} info={data.searchRecipe.userInfo} desc={el} key={i} />
-        );
+        return <Food like={like} refetch={refetch} info={data.searchRecipe.userInfo} desc={el} key={i} />;
       })}
     </Container>
   );
