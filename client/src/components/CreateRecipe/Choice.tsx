@@ -3,10 +3,8 @@ import { allMaterials } from "../../state/state";
 import { useState } from "react";
 import { ChoiceContainer, Label, List, ListWrap, SelectContent, Wrap } from "../../styled/create";
 
-const Choice = () => {
-  const [materials, setMaterials] = useState<string[]>([]);
+const Choice = ({ materials, setMaterials }: { materials: string[]; setMaterials: Function }) => {
   const getAllMaterails = useRecoilValue(allMaterials);
-  console.log(materials);
 
   return (
     <Wrap>

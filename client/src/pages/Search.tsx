@@ -44,6 +44,7 @@ const Search = () => {
         <Button
           onClick={() => {
             console.log(list);
+            window.scrollTo(0, 0);
             setMaterialList(list);
           }}
         >

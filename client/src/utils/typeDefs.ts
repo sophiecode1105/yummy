@@ -28,3 +28,7 @@ export type FormData = {
   password2: string;
   nickName: string;
 };
+
+export interface fontColorProps {
+  fontcolor: boolean;
+}
