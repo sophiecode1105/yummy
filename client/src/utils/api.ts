@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client";
-import { useRecoilState } from "recoil";
-import { social } from "../state/state";
+import { gql } from '@apollo/client';
+import { useRecoilState } from 'recoil';
+import { social } from '../state/state';
 
 const [socialType] = useRecoilState(social);
 
