@@ -14,9 +14,6 @@ import {
   UserNickname,
 } from "../../styled/recipeList";
 import UndefinedImg from "../../assets/noImg.png";
-import { gql, useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
-
 const Food = ({ desc, info, refetch, like }: any) => {
   let { id = 0, contents = [], likes = [], title = "", user = {}, materials = "" } = desc;
   materials = materials.slice(0, 80) + "...";

@@ -1,28 +1,14 @@
-import { useState } from 'react';
-import Content from '../components/CreateRecipe/Content';
-import { content } from '../utils/typeDefs';
-import { gql, useMutation } from '@apollo/client';
-import RecipeTitle from '../components/CreateRecipe/RecipeTitle';
-import { useRecoilValue } from 'recoil';
-import { materialList, title } from '../state/state';
-import Choice from '../components/CreateRecipe/Choice';
-import { AddIcon, Container, ContentContainer, Label, OrderButton, RegisterButton } from '../styled/create';
-import { Button } from '../styled/materialList';
-import plus from '../assets/plus.png';
-
-const postRecipe = gql`
-  mutation ($info: createRecipe!) {
-    createRecipe(info: $info) {
-      id
-      title
-    }
-  }
-`;
-const postContents = gql`
-  mutation ($info: [inputContent]!, $recipeId: Int!) {
-    createContent(info: $info, recipeId: $recipeId)
-  }
-`;
+import { useState } from "react";
+import Content from "../components/CreateRecipe/Content";
+import { content } from "../utils/typeDefs";
+import { gql, useMutation } from "@apollo/client";
+import RecipeTitle from "../components/CreateRecipe/RecipeTitle";
+import { useRecoilValue } from "recoil";
+import { materialList, title } from "../state/state";
+import Choice from "../components/CreateRecipe/Choice";
+import { AddIcon, Container, ContentContainer, Label, OrderButton, RegisterButton } from "../styled/create";
+import plus from "../assets/plus.png";
+import { postContents, postRecipe } from "../graphql/query";
 
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);
@@ -30,16 +16,16 @@ const CreateRecipe = () => {
   const material = useRecoilValue(materialList);
   const [prevImg] = useState<string[]>([plus]);
 
-  const [inputContents] = useState<content[]>([{ img: '', explain: '' }]);
+  const [inputContents] = useState<content[]>([{ img: "", explain: "" }]);
 
   const [recipe] = useMutation(postRecipe);
   const [content] = useMutation(postContents);
 
   const complete = async () => {
-    console.log(material.join(' & '));
+    console.log(material.join(" & "));
     const { data: RecipeData = { createRecipe: {} } } = await recipe({
       variables: {
-        info: { title: recipeTitle, materials: material.join(' & ') },
+        info: { title: recipeTitle, materials: material.join(" & ") },
       },
     });
 
@@ -55,7 +41,7 @@ const CreateRecipe = () => {
 
   const add = () => {
     prevImg.push(plus);
-    inputContents.push({ img: '', explain: '' });
+    inputContents.push({ img: "", explain: "" });
     setRender(render + 1);
   };
   return (

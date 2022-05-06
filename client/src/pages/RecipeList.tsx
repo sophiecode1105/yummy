@@ -1,44 +1,12 @@
 import { materialList } from "../state/state";
-import { Container, FoodImg, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
+import { Container, HatImg, Title, KnifeImg, TitleWrapper } from "../styled/recipeList";
 import Tag from "../components/Recipe/Tag";
 import chefHat from "../assets/chefHat.png";
 import kitchenKinfe from "../assets/kitchenKnife.png";
 import Food from "../components/Recipe/Food";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useRecoilValue } from "recoil";
-
-const Get_FoodList = gql`
-  query ($materialName: [String]!) {
-    searchRecipe(materialName: $materialName) {
-      recipeList {
-        id
-        title
-        materials
-        likes {
-          userId
-        }
-        user {
-          nickName
-          img
-        }
-        contents {
-          img
-        }
-      }
-      userInfo {
-        id
-      }
-    }
-  }
-`;
-
-const postLike = gql`
-  mutation ($recipeId: Int!, $userId: Int!) {
-    Like(recipeId: $recipeId, userId: $userId) {
-      id
-    }
-  }
-`;
+import { Get_FoodList, postLike } from "../graphql/query";
 
 const RecipeList = () => {
   const searchMaterails = useRecoilValue(materialList);
