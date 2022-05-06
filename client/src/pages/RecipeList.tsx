@@ -7,7 +7,7 @@ import Food from "../components/Recipe/Food";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
-import { Get_FoodList, postLike } from "../utils/api";
+import { Get_FoodList, postLike } from "../graphql/query";
 
 const HTML: any = document.querySelector("html");
 const RecipeList = () => {

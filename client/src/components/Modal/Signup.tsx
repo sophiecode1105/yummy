@@ -24,7 +24,7 @@ import {
   WelcomeImg,
   SignUpButton,
 } from "../../styled/modal";
-import { Certify, Join } from "../../utils/api";
+import { Certify, Join } from "../../graphql/query";
 
 const Signup = () => {
   const [certiNum, setCertiNum] = useRecoilState(emailCertiNum);

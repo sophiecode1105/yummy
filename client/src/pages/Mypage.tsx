@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import MyList from "../components/Mypage/MyList";
 import Profile from "../components/Mypage/Profile";
-import { getUser } from "../utils/api";
+import { getUser } from "../graphql/query";
 
 const Mypage = () => {
   const { loading, data = { getUser: {} }, error } = useQuery(getUser);

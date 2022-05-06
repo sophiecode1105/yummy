@@ -15,7 +15,7 @@ import {
   RegisterButton,
 } from "../styled/create";
 import plus from "../assets/plus.png";
-import { postContents, postRecipe } from "../utils/api";
+import { postContents, postRecipe } from "../graphql/query";
 
 const CreateRecipe = () => {
   const [render, setRender] = useState(0);

@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useSetRecoilState } from "recoil";
 import { title } from "../../state/state";
 import { Input, Label, Wrap } from "../../styled/create";
-import { Get_Materials } from "../../utils/api";
+import { Get_Materials } from "../../graphql/query";
 
 const RecipeTitle = () => {
   //바뀔때 다시 받고싶으면? refetch라는 기능을 쓰면 된다.

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { recipe } from "../utils/api";
+import { recipe } from "../graphql/query";
 
 const Detail = () => {
   const { id } = useParams();

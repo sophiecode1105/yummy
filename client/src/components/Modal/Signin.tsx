@@ -16,7 +16,7 @@ import {
   SignInInput,
   SignInForm,
 } from "../../styled/modal";
-import { postLogin } from "../../utils/api";
+import { postLogin } from "../../graphql/query";
 
 function Signin() {
   const [loginInfo, setLoginInfo] = useState({
