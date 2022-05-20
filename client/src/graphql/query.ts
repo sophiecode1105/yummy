@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const Get_Materials = gql`
   query {
@@ -73,11 +73,36 @@ export const getUser = gql`
       recipes {
         id
         title
+        user {
+          nickName
+          img
+        }
+        materials
+        contents {
+          explain
+          img
+        }
+        likes {
+          userId
+        }
       }
       likes {
         id
         recipe {
+          id
           title
+          user {
+            nickName
+            img
+          }
+          materials
+          contents {
+            explain
+            img
+          }
+          likes {
+            userId
+          }
         }
       }
     }

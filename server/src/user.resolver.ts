@@ -46,8 +46,21 @@ export class UserResolver {
       return this.prisma.users.findUnique({
         where: { id: userInfo.id },
         include: {
-          recipes: true,
-          likes: { include: { user: true, recipe: true } },
+          recipes: {
+            include: {
+              user: true,
+            },
+          },
+          likes: {
+            include: {
+              user: true,
+              recipe: {
+                include: {
+                  user: true,
+                },
+              },
+            },
+          },
         },
       });
     } catch (err) {

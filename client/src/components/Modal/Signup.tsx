@@ -54,14 +54,6 @@ const Signup = () => {
   };
   const [up, { loading: loading2, data: data2, error: error2 }] = useMutation(Join);
 
-  const fileUpload: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const files = e.target.files;
-    if (files && files.length === 1) {
-      const file = files[0];
-      console.log('file', file);
-    }
-  };
-
   if (!loading) {
     setCertiNum(data?.emailCertify);
   }

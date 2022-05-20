@@ -52,6 +52,8 @@ const RecipeList = () => {
     };
   }, [page, searchMaterails]);
 
+  console.log(list);
+
   return (
     <Container>
       <HatImg src={chefHat} />

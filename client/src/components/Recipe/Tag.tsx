@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { allMaterials, materialList } from "../../state/state";
+import { useState, useEffect, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { allMaterials, materialList } from '../../state/state';
 import {
   Icon,
   SearchResult,
@@ -10,14 +10,14 @@ import {
   TagsContainer,
   TagTitle,
   TagWrap,
-} from "../../styled/recipeList";
+} from '../../styled/recipeList';
 
 const Tag = () => {
   const insideRef = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useRecoilState<string[]>(materialList);
   const [isfocused, setIsfocused] = useState<boolean>(false);
   const getAllMaterails = useRecoilValue(allMaterials);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   const handleClickOutside = ({ target }: any) => {
     if (isfocused && !insideRef?.current?.contains(target)) {
@@ -26,23 +26,23 @@ const Tag = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
     return () => {
-      window.removeEventListener("click", handleClickOutside);
+      window.removeEventListener('click', handleClickOutside);
     };
   });
 
   const addTags = (event: React.FormEvent<HTMLSelectElement>) => {
-    if ((event.target as HTMLInputElement).value !== "") {
+    if ((event.target as HTMLInputElement).value !== '') {
       if (!getAllMaterails.includes((event.target as HTMLInputElement).value)) {
-        alert("재료를 정확하게 입력해주세요");
+        alert('재료를 정확하게 입력해주세요');
       } else if (tags.includes((event.target as HTMLInputElement).value)) {
-        alert("이미 추가된 재료입니다");
-        (event.target as HTMLInputElement).value = "";
+        alert('이미 추가된 재료입니다');
+        (event.target as HTMLInputElement).value = '';
       } else {
         setTags([...tags, (event.target as HTMLInputElement).value]);
-        (event.target as HTMLInputElement).value = "";
-        setSearchText("");
+        (event.target as HTMLInputElement).value = '';
+        setSearchText('');
       }
     }
   };
@@ -75,7 +75,7 @@ const Tag = () => {
       <TagInput
         type="text"
         placeholder="재료를 입력해주세요"
-        onKeyUp={(event: any) => (event.key === "Enter" ? addTags(event) : "")}
+        onKeyUp={(event: any) => (event.key === 'Enter' ? addTags(event) : '')}
         onChange={(e) => {
           setSearchText(e.target.value);
         }}
@@ -92,7 +92,7 @@ const Tag = () => {
                       setTags([...tags, material]);
                       setIsfocused(false);
                     } else {
-                      alert("이미포함했심");
+                      alert('이미포함했심');
                     }
                   }}
                 >

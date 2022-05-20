@@ -1,20 +1,8 @@
-import { Button } from "../../styled/materialList";
-import {
-  ButtonBox,
-  Container,
-  Introduce,
-  UserAvatar,
-  UserInfoBox,
-  UserNick,
-  Wrap,
-} from "../../styled/mypage";
+import { Button } from '../../styled/materialList';
+import { ButtonBox, Container, Introduce, UserAvatar, UserInfoBox, UserNick, Wrap } from '../../styled/mypage';
 
-const Profile = ({
-  userdata,
-}: {
-  userdata: { email: string; nickName: string; img: string; intro: string; likes: []; recipes: [] };
-}) => {
-  let { email = "", nickName = "", img = "", intro = "", likes = [], recipes = [] } = userdata;
+const Profile = ({ userdata }: { userdata: { email: string; nickName: string; img: string; intro: string } }) => {
+  let { email = '', nickName = '', img = '', intro = '' } = userdata;
 
   return (
     <Container>
