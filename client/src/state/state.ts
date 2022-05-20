@@ -10,6 +10,11 @@ export const modal = atom<boolean>({
   default: false,
 });
 
+export const sideModal = atom<boolean>({
+  key: "sideModal",
+  default: false,
+});
+
 export const signUp = atom<boolean>({
   key: "signUp",
   default: false,
@@ -42,5 +47,11 @@ export const materialList = atom<string[]>({
 export const token = atom<string | undefined>({
   key: "token",
   default: undefined,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const social = atom<string>({
+  key: "social",
+  default: "google",
   effects_UNSTABLE: [persistAtom],
 });

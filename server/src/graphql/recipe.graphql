@@ -7,6 +7,12 @@ type Recipe {
   materials: String
   contents: [Content]
 }
+
+type ex {
+  userInfo: User
+  recipeList: [Recipe]
+}
+
 input createRecipe {
   title: String!
   materials: String!
@@ -21,7 +27,7 @@ input updateRecipe {
 type Query {
   getAllRecipe: [Recipe]
   getRecipe(id: Int!): Recipe
-  searchRecipe(materialName: [String]!): [Recipe]
+  searchRecipe(materialName: [String]!, page: Int!): ex
 }
 
 type Mutation {

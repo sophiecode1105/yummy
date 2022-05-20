@@ -1,6 +1,4 @@
-import React from "react";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
 import { modal, signUp } from "../../state/state";
 import { CloseButton, Icon, ModalBackdrop, ModalContainer, ModalView } from "../../styled/modal";
 import Signin from "./Signin";

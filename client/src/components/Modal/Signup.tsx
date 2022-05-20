@@ -1,7 +1,7 @@
 import { useForm, ValidationRule } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { emailCertiNum, joinUserInfo, modal, signUp } from '../../state/state';
+import { emailCertiNum, modal, signUp } from '../../state/state';
 import { FormData, joinInfo } from '../../utils/typeDefs';
 import { useState } from 'react';
 
@@ -24,27 +24,10 @@ import {
   WelcomeImg,
   SignUpButton,
 } from '../../styled/modal';
-
-const Certify = gql`
-  mutation ($email: String!) {
-    emailCertify(email: $email)
-  }
-`;
-
-const Join = gql`
-  mutation ($info: createUser!) {
-    joinUser(info: $info) {
-      id
-      email
-      nickName
-      img
-    }
-  }
-`;
+import { Certify, Join } from '../../graphql/query';
 
 const Signup = () => {
   const [certiNum, setCertiNum] = useRecoilState(emailCertiNum);
-
   const [isFirst, setIsFirst] = useState(true);
   const [img, setImg] = useState<File | undefined>();
   const [intro, setIntro] = useState('');
@@ -71,14 +54,6 @@ const Signup = () => {
   };
   const [up, { loading: loading2, data: data2, error: error2 }] = useMutation(Join);
 
-  const fileUpload: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
-    const files = e.target.files;
-    if (files && files.length === 1) {
-      const file = files[0];
-      console.log('file', file);
-    }
-  };
-
   if (!loading) {
     setCertiNum(data?.emailCertify);
   }
@@ -101,7 +76,6 @@ const Signup = () => {
     const reader = new FileReader();
 
     reader.onload = () => {
-      console.log(String(reader.result));
       setAvatarImg(String(reader.result));
     };
     reader.readAsDataURL(file);
@@ -109,7 +83,6 @@ const Signup = () => {
 
   const postJoin = () => {
     const { email, nickName, password } = getValues();
-    console.log(email, nickName, password);
     up({
       variables: {
         info: {

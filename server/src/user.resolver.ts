@@ -41,19 +41,30 @@ export class UserResolver {
     token: string,
   ): Promise<Users> {
     try {
-      console.log('1');
       const userInfo = this.jwtService.verify(token);
-      console.log('2', userInfo);
 
       return this.prisma.users.findUnique({
         where: { id: userInfo.id },
         include: {
-          recipes: true,
-          likes: { include: { user: true, recipe: true } },
+          recipes: {
+            include: {
+              user: true,
+            },
+          },
+          likes: {
+            include: {
+              user: true,
+              recipe: {
+                include: {
+                  user: true,
+                },
+              },
+            },
+          },
         },
       });
     } catch (err) {
-      console.log('3', err);
+      console.log(err);
       throw new Error('로그인을 다시해주세요');
     }
   }
@@ -162,8 +173,6 @@ export class UserResolver {
   @Query()
   async google(@Args('code') code: string): Promise<string> {
     try {
-      console.log('code');
-      console.log(code);
       const {
         data: { access_token },
       } = await axios.post(
@@ -173,9 +182,6 @@ export class UserResolver {
         },
         { withCredentials: true },
       );
-
-      console.log('access_token');
-      console.log(access_token);
 
       const {
         data: { email },
@@ -217,6 +223,63 @@ export class UserResolver {
 
       return token;
     } catch (err) {
+      throw new Error('로그인을 다시해주세요');
+    }
+  }
+
+  @Query()
+  async kakao(@Args('code') code: string): Promise<string> {
+    try {
+      const {
+        data: { access_token },
+      } = await axios.post(
+        `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT_ID}&grant_type=authorization_code&redirect_uri=http://localhost:3000`,
+        {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+        },
+        { withCredentials: true },
+      );
+
+      const {
+        data: {
+          kakao_account: {
+            email,
+            profile: { nickname },
+          },
+        },
+      } = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+        },
+      });
+
+      let userInfo = await this.prisma.users.findUnique({
+        where: { email },
+      });
+      if (!userInfo) {
+        const createUser = await this.prisma.users.create({
+          data: { email, nickName: nickname },
+        });
+
+        const token = this.jwtService.sign({
+          id: createUser.id,
+          email,
+          nickName: nickname,
+        });
+        return token;
+      }
+      const token = this.jwtService.sign({
+        id: userInfo.id,
+        email,
+        nickName: userInfo.nickName,
+      });
+
+      return token;
+    } catch (err) {
+      console.log(err);
       throw new Error('로그인을 다시해주세요');
     }
   }

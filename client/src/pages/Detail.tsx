@@ -1,21 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
-
-const recipe = gql`
-  query ($id: Int!) {
-    getRecipe(id: $id) {
-      title
-      materials
-      contents {
-        explain
-        img
-      }
-      likes {
-        userId
-      }
-    }
-  }
-`;
+import { useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
+import { recipe } from '../graphql/query';
 
 const Detail = () => {
   const { id } = useParams();
@@ -27,7 +12,7 @@ const Detail = () => {
     variables: { id: Number(id) },
   });
 
-  let { contents = [], materials = "", title = "", likes = [] } = data.getRecipe;
+  let { contents = [], materials = '', title = '', likes = [] } = data.getRecipe;
 
   return (
     <div>

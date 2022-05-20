@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Materials } from '@prisma/client';
 import axios from 'axios';
+import { materials } from 'uploads/materialList';
 import { PrismaService } from './prisma.service';
 
 @Resolver()
@@ -33,6 +34,17 @@ export class MaterialResolver {
   }
 
   @Mutation()
+  async setMaterial2(): Promise<Materials> {
+    for (let i in materials) {
+      console.log(i);
+      await this.prisma.materials.create({
+        data: { name: i, img: materials[i] },
+      });
+    }
+    return;
+  }
+
+  @Mutation()
   async setMaterial(): Promise<Materials> {
     console.log('진입');
     const {
@@ -40,11 +52,10 @@ export class MaterialResolver {
         COOKRCP01: { row },
       },
     } = await axios.get(
-      'https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/101/300',
+      'https://openapi.foodsafetykorea.go.kr/api/f27d69e93170486c8c6e/COOKRCP01/json/1/250',
     );
 
     row.map(async (el, idx) => {
-      console.log(idx);
       const recipe = await this.prisma.recipes.create({
         data: {
           title: el.RCP_NM,
@@ -59,7 +70,7 @@ export class MaterialResolver {
           likes: true,
         },
       });
-      console.log(recipe.id);
+
       for (let i = 1; i <= 20; i++) {
         let num = String(i).padStart(2, '0');
         let explain = `MANUAL${num}`;
@@ -80,10 +91,8 @@ export class MaterialResolver {
             },
           });
         }
-        if (i === 20) {
-          console.log('컨텐츠 마지막');
-        }
       }
+      console.log('완료');
     });
 
     try {
